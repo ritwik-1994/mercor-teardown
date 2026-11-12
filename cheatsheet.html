@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A one-page guide to reading the Mercor Teardown: what each chapter shows, how to read every chart, the terms used, and the numbers to remember.">
+<title>Mercor Teardown Cheatsheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a dense reference sheet in the Teardown's system. Short sections, scannable cards, a glossary you can filter. */
+:root{
+  color-scheme:light;
+  --paper:#F5F7F6; --surface:#FFFFFF; --ink:#11161A; --muted:#5A656D; --rule:#D8DEDC;
+  --accent:#0D7A72; --accent-wash:#DCEFEB; --flag:#B42318; --flag-wash:#FBE4E1;
+  --f-display:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0D1113; --surface:#151B1E; --ink:#E7ECEA; --muted:#97A3A9; --rule:#263135;
+  --accent:#3DC3B4; --accent-wash:#0F2F2B; --flag:#F27B6F; --flag-wash:#3A1613; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0D1113; --surface:#151B1E; --ink:#E7ECEA; --muted:#97A3A9; --rule:#263135;
+  --accent:#3DC3B4; --accent-wash:#0F2F2B; --flag:#F27B6F; --flag-wash:#3A1613; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-0.015em}
+p{margin:0}
+a{color:var(--accent);text-underline-offset:3px}
+.kicker{font:500 .72rem/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+
+header{padding-block:44px 28px;border-bottom:2px solid var(--ink);display:grid;gap:14px}
+header h1{font-weight:900;font-size:clamp(2rem,4.6vw,3.2rem);line-height:1}
+header p{color:var(--muted);max-width:62ch;font-size:1.05rem}
+.back{font:500 .82rem/1 var(--f-mono)}
+nav.jump{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+nav.jump a{font:500 .76rem/1 var(--f-mono);text-decoration:none;padding:7px 9px;border:1px solid var(--rule);border-radius:4px;color:var(--ink);background:var(--surface)}
+nav.jump a:hover,nav.jump a:focus-visible{border-color:var(--accent);outline:none}
+
+section{padding-block:40px;border-bottom:1px solid var(--rule);display:grid;gap:18px}
+section h2{font-weight:900;font-size:clamp(1.4rem,2.6vw,1.9rem)}
+.sub{color:var(--muted);max-width:66ch}
+
+/* one-liner */
+.thesis{font:700 clamp(1.2rem,2.4vw,1.6rem)/1.3 var(--f-display);max-width:44ch}
+.thesis em{font-style:normal;color:var(--accent)}
+
+/* chapter map */
+.map{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--rule);min-width:760px}
+.map th,.map td{padding:11px 12px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;font-size:.92rem}
+.map th{font:500 .68rem/1.2 var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.map td.ch{font:700 .95rem/1.25 var(--f-display);white-space:nowrap}
+.map td.ch span{color:var(--accent);margin-right:6px;font-family:var(--f-mono);font-weight:500}
+.map td.n{font:500 .85rem/1.35 var(--f-mono);color:var(--accent);white-space:nowrap}
+.scroll{overflow-x:auto}
+
+/* chart readers */
+.readers{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+.rd{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px;display:grid;grid-template-columns:72px minmax(0,1fr);gap:14px;align-items:start}
+.rd svg{width:72px;height:56px;display:block}
+.rd h3{font-size:1rem;margin-bottom:4px}
+.rd p{font-size:.88rem}
+.rd .how{color:var(--muted)}
+
+/* glossary */
+.gtools{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.gtools input{font:400 .95rem/1 var(--f-mono);padding:10px 12px;border:1px solid var(--rule);border-radius:4px;background:var(--surface);color:var(--ink);width:min(320px,100%)}
+.gtools input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font:500 .74rem/1 var(--f-mono);padding:8px 10px;border:1px solid var(--rule);border-radius:999px;background:var(--surface);color:var(--muted);cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.chips button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:6px;overflow:hidden}
+.term{background:var(--surface);padding:14px 16px;display:grid;gap:5px;align-content:start}
+.term dt{font:700 .98rem/1.2 var(--f-display);display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.term dt small{font:500 .62rem/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.term dd{margin:0;font-size:.9rem}
+.term dd i{font-style:normal;color:var(--muted)}
+#gcount{font:500 .78rem/1 var(--f-mono);color:var(--muted)}
+.empty{padding:16px;color:var(--muted);font-style:italic}
+
+/* numbers */
+.nums{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.nb{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:4px}
+.nb strong{font:900 1.8rem/1 var(--f-display);color:var(--accent)}
+.nb.f strong{color:var(--flag)}
+.nb span{font-size:.88rem}
+
+/* evidence */
+.evrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.evc{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:16px;display:grid;gap:8px}
+.ev{justify-self:start;font:500 .66rem/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 7px;border-radius:3px}
+.ev.v{background:var(--accent-wash);color:var(--accent)}
+.ev.r{border:1px solid var(--rule);color:var(--muted)}
+.ev.i{border:1px dashed var(--muted);color:var(--muted)}
+.evc p{font-size:.9rem}
+
+/* faq */
+.faq{display:grid;gap:8px;max-width:760px}
+.faq details{background:var(--surface);border:1px solid var(--rule);border-radius:6px;padding:14px 16px}
+.faq summary{cursor:pointer;font:700 1rem/1.35 var(--f-display)}
+.faq summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:3px}
+.faq details p{margin-top:8px;font-size:.93rem}
+
+footer{padding-block:32px 56px;font-size:.85rem;color:var(--muted);display:grid;gap:6px}
+
+@media (max-width:720px){.evrow{grid-template-columns:1fr}}
+@media (max-width:420px){.rd{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="./">← Back to the Mercor Teardown</a>
+    <span class="kicker">Cheatsheet</span>
+    <h1>How to read the Mercor Teardown</h1>
+    <p>What each chapter shows, how to read every chart, the terms the page uses, and the numbers worth remembering. Five minutes, then the full page reads fast.</p>
+    <nav class="jump" aria-label="Sections">
+      <a href="#map">Chapter map</a><a href="#charts">Reading the charts</a><a href="#glossary">Glossary</a><a href="#numbers">Numbers</a><a href="#evidence">Evidence labels</a><a href="#faq">Quick answers</a>
+    </nav>
+  </header>
+
+  <section aria-label="The page in one line">
+    <span class="kicker">The page in one line</span>
+    <p class="thesis">Mercor publishes benchmarks to earn trust and attention, then <em>licenses much larger datasets</em> to AI labs for training.</p>
+    <p class="sub">Everything else on the page explains how it builds those benchmarks, checks them, launches them and where the process slips.</p>
+  </section>
+
+  <section id="map">
+    <span class="kicker">Chapter map</span>
+    <h2>Each chapter answers one question</h2>
+    <div class="scroll">
+      <table class="map">
+        <thead><tr><th>Chapter</th><th>Question it answers</th><th>What the visual shows</th><th>Remember</th></tr></thead>
+        <tbody>
+          <tr><td class="ch"><span>Top</span>Hero</td><td>What is the business?</td><td>Two squares drawn to scale: public tasks above a dashed line, licensable tasks below.</td><td class="n">240 vs 2,620</td></tr>
+          <tr><td class="ch"><span>Top</span>Seven findings</td><td>What matters most?</td><td>Seven headline numbers. The red one is a contradiction in Mercor's own data.</td><td class="n">9% · −38 pts</td></tr>
+          <tr><td class="ch"><span>01</span>Footprint</td><td>What does Mercor sell?</td><td>Four business lines and its scale claims. Red numbers disagree with each other.</td><td class="n">5M+ vs 4M+</td></tr>
+          <tr><td class="ch"><span>02</span>Catalog</td><td>What is on the leaderboard site?</td><td>43 tiles colored by type, then a dot table of what each type of page shows.</td><td class="n">8 own, 35 others'</td></tr>
+          <tr><td class="ch"><span>03</span>Extended trick</td><td>How does Mercor show fresh data matters?</td><td>Slope chart: model scores on a public benchmark fall on Mercor's held-out version.</td><td class="n">~84% → ~46%</td></tr>
+          <tr><td class="ch"><span>04</span>Methodology spec</td><td>How standard are the benchmark write-ups?</td><td>The 11-field card every benchmark gets, and a bar of how many runs each uses.</td><td class="n">11 fields, 31 cards</td></tr>
+          <tr><td class="ch"><span>05</span>Commercial model</td><td>How does the money work?</td><td>Licensable volumes to scale, a six-step sales ladder, and the data-buying program.</td><td class="n">12,000 tasks</td></tr>
+          <tr><td class="ch"><span>06</span>Partners</td><td>What does "in partnership with" mean?</td><td>Three cards, each with a bar of who built how much.</td><td class="n">3 kinds of deal</td></tr>
+          <tr><td class="ch"><span>07</span>12 quality gates</td><td>What happens before a benchmark ships?</td><td>Twelve numbered checks. The three outlined have the strongest numbers.</td><td class="n">98.5% · 20%</td></tr>
+          <tr><td class="ch"><span>08</span>Launch playbook</td><td>In what order do things go public?</td><td>A timeline of six launches with a symbol per event, then the usual sequence.</td><td class="n">arXiv 1–2 days early</td></tr>
+          <tr><td class="ch"><span>09</span>Weaknesses</td><td>Where does it slip?</td><td>Eight red-flagged problems, mostly the same fact differing across pages.</td><td class="n">100 vs 160 tasks</td></tr>
+          <tr><td class="ch"><span>10</span>Unknowns</td><td>What can't be seen from outside?</td><td>A table of gaps and who could fill each one.</td><td class="n">6 open questions</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="charts">
+    <span class="kicker">Reading the charts</span>
+    <h2>Every visual, decoded</h2>
+    <div class="readers">
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><line x1="0" y1="18" x2="72" y2="18" stroke="var(--accent)" stroke-dasharray="3 3"/><rect x="40" y="9" width="9" height="9" fill="var(--accent)"/><rect x="28" y="18" width="30" height="30" fill="var(--ink)"/></svg>
+        <div><h3>Iceberg squares</h3><p>Area equals task count. Above the dashed line is what anyone can see. Below is what Mercor sells.</p><p class="how">Read it as: the public part is about a tenth of the whole.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><rect x="2" y="6" width="20" height="14" fill="var(--ink)"/><rect x="26" y="6" width="20" height="14" fill="var(--accent)"/><rect x="50" y="6" width="20" height="14" fill="var(--accent-wash)" stroke="var(--accent)"/><rect x="2" y="26" width="20" height="14" fill="var(--surface)" stroke="var(--rule)"/><rect x="26" y="26" width="20" height="14" fill="var(--surface)" stroke="var(--rule)"/><rect x="50" y="26" width="20" height="14" fill="var(--surface)" stroke="var(--rule)"/></svg>
+        <div><h3>Catalog tiles</h3><p>One tile per benchmark page. Black: partner. Teal: Mercor-built. Pale teal: Mercor-extended. White: open-source run by Mercor.</p><p class="how">The sea of white tiles is the point: most of the catalog is other people's benchmarks.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><g fill="var(--accent)"><circle cx="8" cy="28" r="4"/><circle cx="20" cy="28" r="4"/><circle cx="32" cy="28" r="4"/><circle cx="44" cy="28" r="4"/></g><circle cx="56" cy="28" r="4" fill="var(--rule)"/></svg>
+        <div><h3>Depth dots</h3><p>Five dots per cell. Filled dots show the share of pages of that type that include the feature. The number beside them is the exact count.</p><p class="how">Only Mercor's own pages fill the uncertainty, FAQ and "who writes" rows.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><line x1="10" y1="10" x2="62" y2="40" stroke="var(--ink)" stroke-width="2"/><line x1="10" y1="14" x2="62" y2="44" stroke="var(--ink)" stroke-width="2" stroke-opacity=".6"/><circle cx="10" cy="10" r="3.5" fill="var(--ink)"/><circle cx="62" cy="40" r="3.5" fill="var(--accent)"/></svg>
+        <div><h3>Slope chart</h3><p>Left dot: a model's score on the public benchmark. Right dot: its score on Mercor's held-out version. Each line is one model.</p><p class="how">Steep downward lines mean the public score overstates how the model does on new tasks.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><rect x="2" y="20" width="40" height="16" fill="var(--accent)"/><rect x="42" y="20" width="20" height="16" fill="var(--accent)" stroke="var(--surface)"/><rect x="62" y="20" width="8" height="16" fill="var(--muted)"/></svg>
+        <div><h3>Runs bar</h3><p>Each segment is how many of the 31 benchmarks use that number of runs per task. Wider means more benchmarks.</p><p class="how">Most run each task 3 times, then average.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><rect x="2" y="12" width="68" height="10" fill="var(--ink)"/><rect x="2" y="12" width="7" height="10" fill="var(--accent)"/><rect x="2" y="32" width="40" height="10" fill="var(--ink)"/></svg>
+        <div><h3>Volume bars</h3><p>Bar length is the number of tasks Mercor licenses, on one scale up to 12,000. The teal sliver is the public set, where stated.</p><p class="how">Compare bar lengths directly. They are to scale.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><g fill="var(--accent-wash)" stroke="var(--accent)"><rect x="2" y="34" width="13" height="18"/><rect x="19" y="28" width="13" height="24"/><rect x="36" y="22" width="13" height="30"/><rect x="53" y="14" width="13" height="38"/></g></svg>
+        <div><h3>Sales ladder</h3><p>Six steps from a free leaderboard to a full research partnership. Taller steps mean a bigger commitment from the buyer.</p><p class="how">Every step is reachable from one page.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><rect x="2" y="24" width="50" height="8" fill="var(--ink)"/><rect x="52" y="24" width="18" height="8" fill="var(--accent)"/></svg>
+        <div><h3>Partner bars</h3><p>Black is the partner's share of the build, teal is Mercor's. The split is illustrative, not measured.</p><p class="how">Same label on the website, very different deals underneath.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><rect x="4" y="8" width="64" height="40" rx="4" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/><text x="12" y="30" font-size="16" font-weight="900" fill="var(--accent)" font-family="Schibsted Grotesk, Arial">07</text></svg>
+        <div><h3>Gate cards</h3><p>Numbered in the order work happens. Each card has what Mercor does, the number behind it, and an evidence label.</p><p class="how">An outlined card has the strongest proof.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><line x1="6" y1="28" x2="66" y2="28" stroke="var(--ink)" stroke-opacity=".35" stroke-width="2"/><circle cx="10" cy="28" r="4" fill="var(--surface)" stroke="var(--muted)" stroke-width="2"/><rect x="24" y="23" width="9" height="9" transform="rotate(45 28.5 27.5)" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><circle cx="44" cy="28" r="5" fill="var(--accent)"/><rect x="56" y="23" width="9" height="9" fill="var(--ink)"/></svg>
+        <div><h3>Launch timeline</h3><p>Hollow circle: repo created. Diamond: arXiv paper. Teal dot: blog. Black square: open data. One row per launch.</p><p class="how">A long grey line means open data came weeks after the launch.</p></div>
+      </article>
+      <article class="rd">
+        <svg viewBox="0 0 72 56" aria-hidden="true"><circle cx="20" cy="28" r="13" fill="var(--flag-wash)"/><text x="16" y="34" font-size="17" font-weight="900" fill="var(--flag)" font-family="Schibsted Grotesk, Arial">!</text></svg>
+        <div><h3>Red flags</h3><p>A red "!" or a red number marks a problem, usually two Mercor pages that disagree about the same fact.</p><p class="how">These are the places to double-check before quoting Mercor.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="glossary">
+    <span class="kicker">Glossary</span>
+    <h2>Every term on the page</h2>
+    <div class="gtools">
+      <label class="kicker" for="gsearch">Find a term</label>
+      <input id="gsearch" type="search" placeholder="e.g. held-out, pass@1" autocomplete="off">
+      <span id="gcount"></span>
+    </div>
+    <div class="chips" role="group" aria-label="Filter by topic" id="gchips"></div>
+    <dl class="gloss" id="gloss" style="margin:0"></dl>
+  </section>
+
+  <section id="numbers">
+    <span class="kicker">Numbers to remember</span>
+    <h2>Ten figures that carry the story</h2>
+    <div class="nums">
+      <div class="nb"><strong class="num">9%</strong><span>Public share of the APEX-Agents dataset (240 of 2,620 tasks).</span></div>
+      <div class="nb"><strong class="num">43</strong><span>Benchmark pages: 6 partner, 2 Mercor, 10 extended, 25 open-source.</span></div>
+      <div class="nb"><strong class="num">−38 pts</strong><span>Average score drop from public Terminal-Bench 2.1 to Mercor's held-out version.</span></div>
+      <div class="nb"><strong class="num">11</strong><span>Fields on every methodology card, filled on all 31 cards.</span></div>
+      <div class="nb"><strong class="num">12,000</strong><span>Largest licensable set listed (SWE-bench Extended).</span></div>
+      <div class="nb"><strong class="num">98.5%</strong><span>AI judge agreement with experts on APEX-Agents (747 labels).</span></div>
+      <div class="nb"><strong class="num">20%</strong><span>APEX-Agents tasks re-solved by fresh experts. 10% needed fixes.</span></div>
+      <div class="nb"><strong class="num">599</strong><span>Candidate tasks APEX-Accounting started from before keeping the hardest.</span></div>
+      <div class="nb"><strong class="num">1–2 days</strong><span>How far ahead of launch the arXiv paper usually goes up.</span></div>
+      <div class="nb f"><strong class="num">100 vs 160</strong><span>APEX-Accounting task count: page versus paper.</span></div>
+    </div>
+  </section>
+
+  <section id="evidence">
+    <span class="kicker">Evidence labels</span>
+    <h2>How sure is each claim?</h2>
+    <div class="evrow">
+      <div class="evc"><span class="ev v">Verified</span><p>Re-read on the original source (Mercor's site, paper or Hugging Face page) on 12 Nov 2026. Safe to quote.</p></div>
+      <div class="evc"><span class="ev r">Agent-sourced</span><p>Found by a research agent that cited a primary source, but not re-read. Check the source before quoting.</p></div>
+      <div class="evc"><span class="ev i">Inferred</span><p>Reasoning from patterns or web-archive captures. Treat as a lead, not a fact.</p></div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <span class="kicker">Quick answers</span>
+    <h2>Questions people ask after reading</h2>
+    <div class="faq">
+      <details><summary>Is Mercor's data real or made up?</summary><p>Both. Its benchmark worlds are mostly fictional (22 of 33 APEX-Agents worlds are fully fictional). Separately, its data-buying program pays companies for real workplace data, which it de-identifies and licenses to labs.</p></details>
+      <details><summary>Can anyone train on the public benchmark?</summary><p>No. The public APEX-Agents set is CC-BY-4.0 but marked "exclusively for model evaluation". Training, fine-tuning and scraping are forbidden. Training rights come with a license.</p></details>
+      <details><summary>Why do the "extended" scores matter?</summary><p>They show models scoring much lower on tasks they have never seen. That is the argument for buying fresh, private data, made with one chart.</p></details>
+      <details><summary>How fresh are Mercor's leaderboards?</summary><p>Very. On 12 Nov 2026 they already listed Fable 5.2, GPT-6.1 Sol, Gemini 4 Carbon, Grok 4.6 and Muse Wonder 1.0.</p></details>
+      <details><summary>Does Mercor publish prices?</summary><p>No. Every step past the free leaderboard goes through a "Talk to our team" form.</p></details>
+      <details><summary>What is the single biggest weakness?</summary><p>Consistency. Release dates, task counts and expert counts differ between Mercor's own pages, because the same fact lives in several places.</p></details>
+    </div>
+  </section>
+
+  <footer>
+    <span><a href="./">← Back to the Mercor Teardown</a></span>
+    <span>Cheatsheet for the Mercor Teardown, 12 Nov 2026. Sources are listed at the bottom of the main page.</span>
+  </footer>
+</div>
+
+<script>
+const G = [
+  ["Benchmark","Business","A fixed set of tasks used to score AI models, with a public leaderboard. On this page, mostly a marketing and trust asset."],
+  ["Dataset (off-the-shelf)","Business","Ready-made tasks Mercor licenses to labs for training. Usually far larger than the public benchmark."],
+  ["Licensable","Business","Available to buy rights to, for model training. The opposite of evaluation-only."],
+  ["Sales ladder","Business","The six steps from free leaderboard to samples, license, extension, custom dataset and research partnership."],
+  ["Data monetization","Business","Mercor's program that pays companies for workplace data (Slack, Gmail, Salesforce and more) and licenses it to labs."],
+  ["Co-launch","Business","Both partners announce on the same day. Only PLE with Google did this."],
+  ["Leaderboard","Catalog","A ranked table of model scores on one benchmark."],
+  ["Mercor-extended","Catalog","A well-known public benchmark plus new held-out tasks written by Mercor. The page shows both scores."],
+  ["Open-source benchmark","Catalog","Someone else's public benchmark that Mercor runs and hosts a board for, without changing it."],
+  ["Partner benchmark","Catalog","Listed with 'In partnership with [logo]'. Covers three different deals, see chapter 06."],
+  ["Methodology card","Catalog","Mercor's standard 11-field summary of how a benchmark is run: source, tasks, runs, metric, modality, formats, harness, grading, judge, release date."],
+  ["Held-out set","Quality","Tasks kept private so models cannot have trained on them. Scores on these are the honest test."],
+  ["Dev set / public split","Quality","The small part of a benchmark released openly so others can try it. The rest stays held out."],
+  ["Contamination","Quality","When test tasks leak into a model's training data, inflating its score. Held-out sets prevent it."],
+  ["Rubric","Quality","The checklist used to grade an answer. Mercor writes each item as an objective pass/fail statement."],
+  ["Gold output","Quality","The expert's reference answer for a task. A good judge must mark every gold output as passing."],
+  ["LLM judge","Quality","An AI model that grades answers against the rubric, instead of a human doing it."],
+  ["Judge validation","Quality","Testing the AI judge against grades from human experts. Mercor reports 97 to 98.5% agreement."],
+  ["Inter-rater agreement (κ)","Quality","How often human graders agree with each other beyond chance. κ 0.857 counts as strong agreement."],
+  ["Independent re-solve","Quality","Experts who never saw a task solve it from scratch, to prove it is doable and fairly graded."],
+  ["Difficulty calibration","Quality","Keeping only tasks that frontier models struggle with, so the benchmark has room to show progress."],
+  ["Adversarial iteration","Quality","Authors test drafts against frontier models while writing and make tasks harder until models fail."],
+  ["Scattergunning","Quality","Giving many answers hoping one matches the rubric. APEX-Agents v1.1 removed scores for models that did it."],
+  ["Pass@1","Metrics","The share of tasks a model gets right on a single try. Mercor averages several runs into one pass@1 figure."],
+  ["Mean score","Metrics","Average share of rubric points earned, so partial credit counts."],
+  ["k (runs)","Metrics","How many times each task is run per model. Most Mercor benchmarks use k = 3."],
+  ["Confidence interval / ±","Metrics","The range a score could plausibly fall in. Overlapping ranges mean two models may not really differ."],
+  ["Max reasoning effort","Metrics","Every model runs at its highest thinking setting, so boards compare models at their best."],
+  ["Best-of","Metrics","Reporting a model's best run instead of its average. Mercor says it never does this."],
+  ["Harness","Tools","The software that runs a model through a task: tools, step limits, time limits."],
+  ["Harbor","Tools","A common packaging format for agent tasks in sealed containers. Mercor distributes in it."],
+  ["Archipelago","Tools","Mercor's open-source system for running and scoring agent tasks."],
+  ["arXiv","Tools","The public preprint server where research papers go up. Mercor posts there 1 to 2 days before a launch."],
+  ["Hugging Face (gated)","Tools","The main site for sharing AI datasets. Gated means visitors accept conditions before downloading."],
+  ["CC-BY-4.0, evaluation only","Tools","An open license requiring credit, here restricted to testing models. No training allowed."],
+  ["Wayback capture","Tools","A snapshot from the Internet Archive. Used to estimate when a page first appeared."]
+];
+const TOPICS=["All","Business","Catalog","Quality","Metrics","Tools"];
+let topic="All";
+const gloss=document.getElementById('gloss'), q=document.getElementById('gsearch'), count=document.getElementById('gcount');
+document.getElementById('gchips').innerHTML=TOPICS.map(t=>`<button type="button" data-t="${t}" aria-pressed="${t==='All'}">${t}</button>`).join('');
+function render(){
+  const s=q.value.trim().toLowerCase();
+  const rows=G.filter(([t,c,d])=>(topic==='All'||c===topic)&&(!s||(t+' '+d).toLowerCase().includes(s)));
+  gloss.innerHTML=rows.length?rows.map(([t,c,d])=>`<div class="term"><dt>${t}<small>${c}</small></dt><dd>${d}</dd></div>`).join(''):`<div class="term empty">No term matches "${q.value.replace(/[<&]/g,'')}". Try a shorter word.</div>`;
+  count.textContent=`${rows.length} of ${G.length} terms`;
+}
+document.getElementById('gchips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;topic=b.dataset.t;document.querySelectorAll('#gchips button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();});
+q.addEventListener('input',render);
+render();
+</script>
+</body>
+</html>
