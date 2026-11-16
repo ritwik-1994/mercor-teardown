@@ -1,0 +1,143 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mercor Publishing Cheatsheet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a one-sheet crib for the presenter. Story line, beat map, numbers, Q&A, glossary. Same palette as the walkthroughs: violet = Mercor, teal = accent. */
+:root{
+  --bg:#F4F6F9; --surface:#FFFFFF; --ink:#131722; --muted:#586174; --line:#DCE1E9;
+  --them:#6D3FD8; --them-soft:#ECE6FB; --us:#0B7A70; --us-soft:#DDF2EF; --warn:#A85A00; --warn-soft:#FBEFD9;
+  --f-display:"Bricolage Grotesque","Avenir Next",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0E1117; --surface:#161A22; --ink:#E7EAF0; --muted:#9AA3B3; --line:#2A303C;
+  --them:#A88BFA; --them-soft:#2A2340; --us:#34CDBB; --us-soft:#14302D; --warn:#F0A53A; --warn-soft:#33270F; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0E1117; --surface:#161A22; --ink:#E7EAF0; --muted:#9AA3B3; --line:#2A303C;
+  --them:#A88BFA; --them-soft:#2A2340; --us:#34CDBB; --us-soft:#14302D; --warn:#F0A53A; --warn-soft:#33270F; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:15px; line-height:1.5}
+.wrap{max-width:1120px; margin:0 auto; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); padding-block:28px 64px; display:flex; flex-direction:column; gap:28px}
+h1,h2,h3{font-family:var(--f-display); margin:0; text-wrap:balance}
+p{margin:0}
+.top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px}
+.top a{color:var(--us); text-decoration:none; font-weight:500}
+.top a:hover{text-decoration:underline}
+.tag{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--warn); background:var(--warn-soft); padding:2px 8px; border-radius:4px}
+.eyebrow{font-family:var(--f-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+h1{font-size:clamp(28px,4vw,42px); font-weight:800; line-height:1.08}
+.oneline{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--them); border-radius:8px; padding:16px 18px; font-size:17px; display:flex; flex-direction:column; gap:6px}
+.oneline .l{font-family:var(--f-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+.jump{display:flex; flex-wrap:wrap; gap:6px}
+.jump a{font-size:13px; color:var(--ink); text-decoration:none; border:1px solid var(--line); border-radius:99px; padding:3px 10px; background:var(--surface)}
+.jump a:hover{border-color:var(--muted)}
+section{display:flex; flex-direction:column; gap:12px; scroll-margin-top:16px}
+h2{font-size:22px; font-weight:700}
+.sub{color:var(--muted); font-size:14px}
+.tw{overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:10px}
+table{border-collapse:collapse; width:100%; font-size:14px}
+th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--f-mono); font-weight:500; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
+td.n{font-family:var(--f-mono); font-size:12px; color:var(--muted); white-space:nowrap}
+td .say{font-family:var(--f-mono); font-size:13px; color:var(--them); white-space:nowrap}
+.nums{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px}
+.num{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:4px}
+.num .v{font-family:var(--f-display); font-weight:700; font-size:28px; line-height:1.05; color:var(--them); font-variant-numeric:tabular-nums}
+.num .v.us{color:var(--us)}
+.num .d{font-size:13.5px; color:var(--muted)}
+.qa{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+.q{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:6px; min-width:0}
+.q b{font-weight:600}
+.q p{font-size:14px; color:var(--muted)}
+.gl{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 24px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:6px 16px}
+.gl div{display:grid; grid-template-columns:150px minmax(0,1fr); gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
+.gl dt,.gl .t{font-family:var(--f-mono); font-size:13px; color:var(--ink); font-weight:500}
+.gl .x{color:var(--muted)}
+.ev{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px}
+.ev div{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:14px; display:flex; flex-direction:column; gap:4px}
+.ev .k{font-family:var(--f-mono); font-size:12px; border:1px solid var(--line); border-radius:3px; padding:0 6px; align-self:flex-start; color:var(--muted)}
+.prep{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:6px; font-size:14.5px}
+.prep b{font-weight:600}
+footer{font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:14px}
+a:focus-visible{outline:2px solid var(--us); outline-offset:2px}
+@media (max-width:760px){ .qa,.gl,.ev{grid-template-columns:minmax(0,1fr)} .gl div{grid-template-columns:120px minmax(0,1fr)} }
+</style>
+
+<div class="wrap">
+<div class="top"><a href="publishing.html" >← Open the walkthrough</a><span><a href="briefing-cheatsheet.html" >Briefing cheatsheet →</a> &nbsp;<span class="tag">Public edition</span></span></div>
+<div style="display:flex;flex-direction:column;gap:10px"><div class="eyebrow">Presenter cheatsheet · Publishing process · 15 min</div><h1>Cheatsheet: how Mercor publishes</h1><p class="sub">Keep this open beside the walkthrough. One row per beat, the numbers to have ready, the questions leaders are likely to ask, and every term on the page.</p></div>
+<div class="oneline"><span class="l">The story in one line</span><span>Mercor runs every benchmark through the same four levels: a catalog slot by ownership, a fixed page template, 12 pre-publish gates with numbers, and a fixed launch recipe. It's fast, and it slips on versioning and consistency.</span></div>
+<nav class="jump" aria-label="Sections"><a href="#map">Beat map</a><a href="#numbers">Numbers</a><a href="#qa">Likely questions</a><a href="#terms">Terms</a><a href="#prep">Before you present</a></nav>
+<section id="map"><h2>Beat map</h2><p class="sub">Times add up to 15 minutes. L1 to L4 are the four levels. If you're short on time, skip beats 2, 5 and 8.</p><div class="tw"><table><thead><tr><th>#</th><th>Beat</th><th>Point to land</th><th>Say this number</th><th>The visual shows</th></tr></thead><tbody>
+<tr><td class="n">01</td><td><b>The pipeline</b><br><span class="n">1 min</span></td><td>Four levels, same order every time. Level 3 is why labs trust them.</td><td><span class="say">4 levels</span></td><td>Four stages; the highlighted one is the gates.</td></tr>
+<tr><td class="n">02</td><td><b>Why they publish</b><br><span class="n">1 min</span></td><td>Publishing is marketing; the licensed dataset is revenue.</td><td><span class="say">240 vs 2,620</span></td><td>Three numbers.</td></tr>
+<tr><td class="n">03</td><td><b>L1 · Catalog slot</b><br><span class="n">2 min</span></td><td>Ownership decides the tier, and the tier decides page depth.</td><td><span class="say">43 pages</span></td><td>Tier bar 6 / 2 / 10 / 25. Meters = share of pages in each tier that show a feature.</td></tr>
+<tr><td class="n">04</td><td><b>L2 · Spec card</b><br><span class="n">2 min</span></td><td>Same 11 fields on every benchmark, plus one run rule.</td><td><span class="say">11 fields · 31 cards</span></td><td>Eleven field tiles; the shaded tile is the global run rule.</td></tr>
+<tr><td class="n">05</td><td><b>L2 · Two-score page</b><br><span class="n">1 min</span></td><td>Extended pages always show public vs held-out scores.</td><td><span class="say">~84% → ~46%</span></td><td>Hollow dot = public, filled dot = held-out, one row per model.</td></tr>
+<tr><td class="n">06</td><td><b>L3 · 12 gates</b><br><span class="n">2 min</span></td><td>Design, build, verify, release prep. Most gates have a published number.</td><td><span class="say">12 gates</span></td><td>Gate cards in four phase columns; V or R in the corner is the evidence label.</td></tr>
+<tr><td class="n">07</td><td><b>L3 · Three proofs</b><br><span class="n">1 min</span></td><td>Solvable, accurately graded, hard. Three numbers answer "is it fair?".</td><td><span class="say">20% · 98.5% · 599</span></td><td>Three big numbers. Strip = launch top scores against a 20–30% band.</td></tr>
+<tr><td class="n">08</td><td><b>L4 · Launch package</b><br><span class="n">1 min</span></td><td>Paper, blog, board and hidden test set always ship. Versioning never does.</td><td><span class="say">5 of 5</span></td><td>Tiles shaded by how often each item ships.</td></tr>
+<tr><td class="n">09</td><td><b>L4 · Launch timing</b><br><span class="n">2 min</span></td><td>Repos a week ahead, arXiv T−1, everything else T0, press T+1.</td><td><span class="say">T−1 arXiv</span></td><td>Timeline, then six real launches. Amber dates = late or out of order.</td></tr>
+<tr><td class="n">10</td><td><b>L4 · After launch</b><br><span class="n">1 min</span></td><td>Fast reruns, loose versioning.</td><td><span class="say">5 of 5 never versioned</span></td><td>Three cards: new version, board changes, reruns.</td></tr>
+<tr><td class="n">11</td><td><b>Where it breaks</b><br><span class="n">1 min</span></td><td>Five failures, all about consistency and versioning.</td><td><span class="say">100 vs 160</span></td><td>Five failures, each a fact that differs across pages or releases.</td></tr>
+</tbody></table></div></section>
+<section id="numbers"><h2>10 numbers to have ready</h2><div class="nums">
+<div class="num"><span class="v ">4</span><span class="d">Levels: catalog slot, page template, gates, launch and after.</span></div>
+<div class="num"><span class="v ">11</span><span class="d">Fields on every methodology card, filled on 31 of 31.</span></div>
+<div class="num"><span class="v ">k = 3</span><span class="d">Runs per task on 18 of 31 cards; k = 4 on 9.</span></div>
+<div class="num"><span class="v ">12</span><span class="d">Pre-publish gates, reconstructed from 6 papers.</span></div>
+<div class="num"><span class="v ">20%</span><span class="d">Tasks re-solved independently on APEX-Agents; 10% fixed.</span></div>
+<div class="num"><span class="v ">98.5%</span><span class="d">Judge agreement on 747 expert labels (97.1% on 1,687 for Accounting).</span></div>
+<div class="num"><span class="v ">599</span><span class="d">Accounting candidates filtered for difficulty.</span></div>
+<div class="num"><span class="v ">T−1</span><span class="d">arXiv goes up the day before launch.</span></div>
+<div class="num"><span class="v ">45 / 71</span><span class="d">Days late for open data on Accounting and APEX-v1.</span></div>
+<div class="num"><span class="v ">4 of 5</span><span class="d">Launches that shipped an open split on Hugging Face.</span></div>
+</div></section>
+<section id="qa"><h2>Likely questions, short answers</h2><div class="qa">
+<div class="q"><b>Does Mercor publish a checklist?</b><p>No. We reconstructed it from 6 arXiv papers, which describe the same gates each time, plus repo and blog dates.</p></div>
+<div class="q"><b>How long from first artifact to launch?</b><p>About a week at the median. Repos are created privately 0–6 days before the arXiv paper.</p></div>
+<div class="q"><b>Do they always release open data?</b><p>On 4 of 5 launches. Twice it came 45 and 71 days after launch.</p></div>
+<div class="q"><b>How do they handle new versions?</b><p>A new Hugging Face repo, with the blog post as the changelog. The board URL stays the same and scores are replaced. Old versions don't point to new ones.</p></div>
+<div class="q"><b>How do partner launches work?</b><p>Two modes. Partner-first: the partner launches and Mercor hosts a board later (Harvey, Cognition, Sierra). Co-launch: same-day posts from both (PLE with Google).</p></div>
+<div class="q"><b>What can't we see?</b><p>Who signs off a release, reviewers per task, discard rates and the difficulty threshold. Former staff and contractors could tell us.</p></div>
+<div class="q"><b>What ships on every launch?</b><p>The arXiv paper, a blog with named authors, the leaderboard and a hidden test set: 5 of 5.</p></div>
+<div class="q"><b>What do they never ship?</b><p>A changelog file, a DOI or release tags on launch repos.</p></div>
+</div></section>
+<section id="terms"><h2>Terms on the page</h2><div class="gl">
+<div><span class="t">pass@1</span><span class="x">Share of tasks a model solves in one attempt, averaged over k runs.</span></div>
+<div><span class="t">k</span><span class="x">Runs per task. Mercor uses 3 to 8. More runs, tighter error bars.</span></div>
+<div><span class="t">± / CI</span><span class="x">Uncertainty on a score. A gap smaller than it isn't a real lead.</span></div>
+<div><span class="t">Held-out</span><span class="x">Tasks kept private so models can't have trained on them.</span></div>
+<div><span class="t">Extended benchmark</span><span class="x">A public benchmark plus new private tasks. Shown with two scores.</span></div>
+<div><span class="t">Headroom</span><span class="x">How far the best model is from 100%. A top score of 20–30% means hard but not hopeless.</span></div>
+<div><span class="t">LLM judge</span><span class="x">An AI model that grades answers against a rubric.</span></div>
+<div><span class="t">Judge validation</span><span class="x">How often the AI judge agrees with expert graders. Mercor: 97–98.5%.</span></div>
+<div><span class="t">κ (kappa)</span><span class="x">Agreement between graders after removing chance. 0.857 is strong.</span></div>
+<div><span class="t">Independent re-solve</span><span class="x">Experts who never saw a task solve it fresh, to prove it's fair and solvable.</span></div>
+<div><span class="t">Contamination</span><span class="x">Test tasks leaking into training data, which inflates scores.</span></div>
+<div><span class="t">Harness</span><span class="x">The code that runs a model on a task: tools, limits, environment.</span></div>
+<div><span class="t">Harbor</span><span class="x">A task container format. Mercor ships in it.</span></div>
+<div><span class="t">Archipelago</span><span class="x">Mercor's open-source harness and environment.</span></div>
+<div><span class="t">Gated HF set</span><span class="x">A Hugging Face dataset you must accept terms to download.</span></div>
+<div><span class="t">CC-BY-4.0, eval only</span><span class="x">Free to use with credit, but only for evaluation. No training.</span></div>
+<div><span class="t">APEX</span><span class="x">Mercor's benchmark brand: APEX-Agents, APEX-SWE, APEX-Accounting and others.</span></div>
+<div><span class="t">PLE</span><span class="x">Physical-Engineering's Last Exam, co-launched with Google Cloud AI Research.</span></div>
+<div><span class="t">Spec card</span><span class="x">Mercor's 11-field methodology card for each benchmark.</span></div>
+<div><span class="t">Run rule</span><span class="x">Every model at max reasoning effort, averaged into pass@1, never best-of.</span></div>
+<div><span class="t">T0 / T−7</span><span class="x">Launch day, and days before it. T+14 is two weeks after.</span></div>
+<div><span class="t">Dev split</span><span class="x">A small open sample of a benchmark; the rest stays held-out.</span></div>
+<div><span class="t">Release card</span><span class="x">The Hugging Face page for a dataset: license, disclaimer, citation.</span></div>
+<div><span class="t">Embargo</span><span class="x">Press gets the story early but can't publish before launch.</span></div>
+<div><span class="t">Scattergunning</span><span class="x">Submitting many attempts to game a board. Mercor removed scores for it.</span></div>
+<div><span class="t">Changelog</span><span class="x">A record of what changed between versions. Mercor has none.</span></div>
+</div></section>
+<section id="prep"><h2>Before you present</h2><ol class="prep">
+<li><b>Recheck Mercor's newest models</b> on mercor.com/apex if you present after this week.</li>
+<li><b>Press T</b> to hide the talk track before you share your screen. J and K move between beats.</li>
+<li><b>Say the evidence label</b> when quoting an R or I item.</li>
+</ol><div class="ev"><div><span class="k">V</span><b>Verified</b><span class="sub">Read on the primary source by us.</span></div><div><span class="k">R</span><b>Researched</b><span class="sub">From a research agent with the source cited, not re-read.</span></div><div><span class="k">I</span><b>Inferred</b><span class="sub">Our reading of indirect evidence. Say "it looks like".</span></div></div></section>
+<footer>Compiled from public sources as of 2026-11-12. <a href="index.html">Full Mercor teardown</a></footer></div>
