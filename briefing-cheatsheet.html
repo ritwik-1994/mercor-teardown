@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a one-sheet crib for the presenter. Story line, beat map, numbers, Q&A, glossary. Same palette as the walkthroughs: violet = Mercor, teal = accent. */
+/* Layout: one readable column, like a briefing note. Each part of the talk is a short card in plain sentences with one thing to remember. */
 :root{
   --bg:#F4F6F9; --surface:#FFFFFF; --ink:#131722; --muted:#586174; --line:#DCE1E9;
   --them:#6D3FD8; --them-soft:#ECE6FB; --us:#0B7A70; --us-soft:#DDF2EF; --warn:#A85A00; --warn-soft:#FBEFD9;
@@ -13,121 +13,89 @@
   --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0E1117; --surface:#161A22; --ink:#E7EAF0; --muted:#9AA3B3; --line:#2A303C;
+  --bg:#0E1117; --surface:#161A22; --ink:#E7EAF0; --muted:#A3ABBA; --line:#2A303C;
   --them:#A88BFA; --them-soft:#2A2340; --us:#34CDBB; --us-soft:#14302D; --warn:#F0A53A; --warn-soft:#33270F; color-scheme:dark }}
 :root[data-theme="dark"]{
-  --bg:#0E1117; --surface:#161A22; --ink:#E7EAF0; --muted:#9AA3B3; --line:#2A303C;
+  --bg:#0E1117; --surface:#161A22; --ink:#E7EAF0; --muted:#A3ABBA; --line:#2A303C;
   --them:#A88BFA; --them-soft:#2A2340; --us:#34CDBB; --us-soft:#14302D; --warn:#F0A53A; --warn-soft:#33270F; color-scheme:dark }
 *{box-sizing:border-box}
-body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:15px; line-height:1.5}
-.wrap{max-width:1120px; margin:0 auto; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); padding-block:28px 64px; display:flex; flex-direction:column; gap:28px}
-h1,h2,h3{font-family:var(--f-display); margin:0; text-wrap:balance}
+body{background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:17px; line-height:1.65}
+.wrap{max-width:760px; margin:0 auto; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); padding-block:28px 72px; display:flex; flex-direction:column; gap:36px}
+h1,h2,h3{font-family:var(--f-display); margin:0; text-wrap:balance; line-height:1.15}
 p{margin:0}
-.top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; font-size:13px}
-.top a{color:var(--us); text-decoration:none; font-weight:500}
+a{color:var(--us)}
+.top{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; font-size:14px}
+.top a{text-decoration:none; font-weight:500}
 .top a:hover{text-decoration:underline}
 .tag{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--warn); background:var(--warn-soft); padding:2px 8px; border-radius:4px}
+.head{display:flex; flex-direction:column; gap:14px}
 .eyebrow{font-family:var(--f-mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
-h1{font-size:clamp(28px,4vw,42px); font-weight:800; line-height:1.08}
-.oneline{background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--them); border-radius:8px; padding:16px 18px; font-size:17px; display:flex; flex-direction:column; gap:6px}
-.oneline .l{font-family:var(--f-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
-.jump{display:flex; flex-wrap:wrap; gap:6px}
-.jump a{font-size:13px; color:var(--ink); text-decoration:none; border:1px solid var(--line); border-radius:99px; padding:3px 10px; background:var(--surface)}
-.jump a:hover{border-color:var(--muted)}
-section{display:flex; flex-direction:column; gap:12px; scroll-margin-top:16px}
-h2{font-size:22px; font-weight:700}
-.sub{color:var(--muted); font-size:14px}
-.tw{overflow-x:auto; background:var(--surface); border:1px solid var(--line); border-radius:10px}
-table{border-collapse:collapse; width:100%; font-size:14px}
-th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top}
-tr:last-child td{border-bottom:0}
-th{font-family:var(--f-mono); font-weight:500; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted)}
-td.n{font-family:var(--f-mono); font-size:12px; color:var(--muted); white-space:nowrap}
-td .say{font-family:var(--f-mono); font-size:13px; color:var(--them); white-space:nowrap}
-.nums{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px}
-.num{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:4px}
-.num .v{font-family:var(--f-display); font-weight:700; font-size:28px; line-height:1.05; color:var(--them); font-variant-numeric:tabular-nums}
-.num .v.us{color:var(--us)}
-.num .d{font-size:13.5px; color:var(--muted)}
-.qa{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
-.q{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; display:flex; flex-direction:column; gap:6px; min-width:0}
-.q b{font-weight:600}
-.q p{font-size:14px; color:var(--muted)}
-.gl{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 24px; background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:6px 16px}
-.gl div{display:grid; grid-template-columns:150px minmax(0,1fr); gap:10px; padding:8px 0; border-bottom:1px solid var(--line); font-size:14px}
-.gl dt,.gl .t{font-family:var(--f-mono); font-size:13px; color:var(--ink); font-weight:500}
-.gl .x{color:var(--muted)}
-.ev{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px}
-.ev div{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:14px; display:flex; flex-direction:column; gap:4px}
-.ev .k{font-family:var(--f-mono); font-size:12px; border:1px solid var(--line); border-radius:3px; padding:0 6px; align-self:flex-start; color:var(--muted)}
-.prep{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:6px; font-size:14.5px}
-.prep b{font-weight:600}
-footer{font-size:12px; color:var(--muted); border-top:1px solid var(--line); padding-top:14px}
+h1{font-size:clamp(30px,5vw,42px); font-weight:800}
+.lead{font-size:19px; line-height:1.6}
+.how{font-size:15px; color:var(--muted)}
+section{display:flex; flex-direction:column; gap:16px; scroll-margin-top:16px}
+h2{font-size:26px; font-weight:700}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:20px 22px; display:flex; flex-direction:column; gap:12px}
+.card .meta{display:flex; gap:10px; align-items:baseline; font-family:var(--f-mono); font-size:12px; color:var(--muted)}
+.card h3{font-size:21px; font-weight:700}
+.card p{color:var(--ink)}
+.card.priv{border-left:4px solid var(--us)}
+.priv-tag{font-family:var(--f-mono); font-size:11px; color:var(--us); text-transform:uppercase; letter-spacing:.06em}
+.rem{display:flex; gap:14px; align-items:baseline; background:var(--them-soft); border-radius:8px; padding:10px 14px}
+.rem .v{font-family:var(--f-display); font-weight:700; font-size:22px; color:var(--them); white-space:nowrap; font-variant-numeric:tabular-nums}
+.rem span:last-child{font-size:15.5px}
+.card.priv .rem{background:var(--us-soft)} .card.priv .rem .v{color:var(--us)}
+dl{margin:0; display:flex; flex-direction:column; gap:0; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:4px 22px}
+dl div{padding:14px 0; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:4px}
+dl div:last-child{border-bottom:0}
+dt{font-weight:600}
+dd{margin:0; color:var(--muted)}
+.qa{display:flex; flex-direction:column; gap:12px}
+.qa .q{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:16px 22px; display:flex; flex-direction:column; gap:6px}
+.qa .q b{font-weight:600}
+.qa .q p{color:var(--muted)}
+ul.prep{margin:0; padding-left:22px; display:flex; flex-direction:column; gap:8px}
+footer{font-size:13px; color:var(--muted); border-top:1px solid var(--line); padding-top:16px}
 a:focus-visible{outline:2px solid var(--us); outline-offset:2px}
-@media (max-width:760px){ .qa,.gl,.ev{grid-template-columns:minmax(0,1fr)} .gl div{grid-template-columns:120px minmax(0,1fr)} }
+@media (max-width:560px){ body{font-size:16px} .card{padding:16px} .rem{flex-direction:column; gap:2px} }
 </style>
 
 <div class="wrap">
-<div class="top"><a href="briefing.html" >← Open the walkthrough</a><span><a href="publishing-cheatsheet.html" >Publishing cheatsheet →</a> &nbsp;<span class="tag">Public edition</span></span></div>
-<div style="display:flex;flex-direction:column;gap:10px"><div class="eyebrow">Presenter cheatsheet · Broad briefing · 14 min</div><h1>Cheatsheet: the Mercor briefing</h1><p class="sub">Keep this open beside the walkthrough. One row per beat, the numbers to have ready, the questions leaders are likely to ask, and every term on the page.</p></div>
-<div class="oneline"><span class="l">The story in one line</span><span>Mercor gives benchmarks away to earn trust and attention, then licenses much larger datasets to labs. It does this at scale, with proof of quality and fast reruns, and its own pages don't always agree.</span></div>
-<nav class="jump" aria-label="Sections"><a href="#map">Beat map</a><a href="#numbers">Numbers</a><a href="#qa">Likely questions</a><a href="#terms">Terms</a><a href="#prep">Before you present</a></nav>
-<section id="map"><h2>Beat map</h2><p class="sub">Times add up to 14 minutes. If you're short on time, skip beats 5, 6 and 8.</p><div class="tw"><table><thead><tr><th>#</th><th>Beat</th><th>Point to land</th><th>Say this number</th><th>The visual shows</th></tr></thead><tbody>
-<tr><td class="n">01</td><td><b>Bottom line</b><br><span class="n">1 min</span></td><td>Benchmarks are their storefront; data is the product.</td><td><span class="say">9% public</span></td><td>Five headline numbers.</td></tr>
-<tr><td class="n">02</td><td><b>Benchmarks sell data</b><br><span class="n">2 min</span></td><td>The public set is a small, evaluation-only slice of what they license.</td><td><span class="say">240 vs 2,620</span></td><td>9 of 100 squares filled = public share. Bars = licensable tasks, to scale up to 12,000.</td></tr>
-<tr><td class="n">03</td><td><b>The catalog</b><br><span class="n">2 min</span></td><td>Breadth gets them found; depth goes where they own the IP.</td><td><span class="say">43 pages</span></td><td>Bar split 6 / 2 / 10 / 25 by tier. Meters = share of pages in each tier that show a feature.</td></tr>
-<tr><td class="n">04</td><td><b>The two-score chart</b><br><span class="n">2 min</span></td><td>Every model loses about half its score on fresh tasks. It sells the data.</td><td><span class="say">~84% → ~46%</span></td><td>Hollow dot = public score, filled dot = held-out score, one row per model.</td></tr>
-<tr><td class="n">05</td><td><b>The sales ladder</b><br><span class="n">1 min</span></td><td>Six steps from free board to research partner, all on one page.</td><td><span class="say">6 steps</span></td><td>Taller step = bigger buyer commitment.</td></tr>
-<tr><td class="n">06</td><td><b>Partners</b><br><span class="n">1 min</span></td><td>"In partnership with" covers three different deals.</td><td><span class="say">3 kinds</span></td><td>Three cards: partner-built, co-built, Mercor-built with partner input.</td></tr>
-<tr><td class="n">07</td><td><b>12 quality gates</b><br><span class="n">2 min</span></td><td>Their quality claims come with numbers. That's why labs trust them.</td><td><span class="say">20% · 98.5%</span></td><td>Twelve cards in work order. Strip = launch top scores against a 20–30% band.</td></tr>
-<tr><td class="n">08</td><td><b>Launch recipe</b><br><span class="n">1 min</span></td><td>Paper a day early, everything else on launch day.</td><td><span class="say">T−1 arXiv</span></td><td>Timeline from private repos to arXiv revisions, using APEX-Agents dates.</td></tr>
-<tr><td class="n">09</td><td><b>Rerun speed</b><br><span class="n">1 min</span></td><td>New frontier models appear on their boards within days.</td><td><span class="say">5 models</span></td><td>The newest models on Mercor's boards on 2026-11-12.</td></tr>
-<tr><td class="n">10</td><td><b>Their weak spots</b><br><span class="n">1 min</span></td><td>Their own pages contradict each other.</td><td><span class="say">100 vs 160</span></td><td>Six weaknesses, mostly the same fact differing across pages.</td></tr>
-</tbody></table></div></section>
-<section id="numbers"><h2>9 numbers to have ready</h2><div class="nums">
-<div class="num"><span class="v ">9%</span><span class="d">APEX-Agents tasks that are public (240 of 2,620).</span></div>
-<div class="num"><span class="v ">43</span><span class="d">Benchmark pages: 6 partner, 2 own, 10 extended, 25 open-source.</span></div>
-<div class="num"><span class="v ">~38 pts</span><span class="d">Average drop, public to held-out Terminal-Bench 2.1 (Opus 5.5: 36).</span></div>
-<div class="num"><span class="v ">12,000</span><span class="d">Largest licensable set listed (SWE-bench Extended).</span></div>
-<div class="num"><span class="v ">98.5%</span><span class="d">AI judge agreement with experts on APEX-Agents (747 labels).</span></div>
-<div class="num"><span class="v ">20%</span><span class="d">Share of tasks re-solved independently; 10% needed a fix.</span></div>
-<div class="num"><span class="v ">599</span><span class="d">Accounting candidates filtered down to the hardest.</span></div>
-<div class="num"><span class="v ">5M+ / 4M+</span><span class="d">Expert network size on two different Mercor pages.</span></div>
-<div class="num"><span class="v ">6</span><span class="d">Steps on the sales ladder, from free board to research partner.</span></div>
+<div class="top"><a href="briefing.html">← Back to the walkthrough</a><span><a href="publishing-cheatsheet.html">Publishing cheatsheet →</a> &nbsp;<span class="tag">Public edition</span></span></div>
+<div class="head"><div class="eyebrow">Cheatsheet · Mercor briefing · about 14 minutes</div><h1>The Mercor briefing, in plain words</h1><p class="lead">Mercor is a company that builds tests for AI models. It gives some of those tests away to get attention, then sells the much larger sets of tasks behind them to AI labs for training. This briefing shows how that works and where it slips.</p><p class="how">Each card below matches one part of the walkthrough, in the same order. Read the card, say it in your own words, and land the one thing to remember.</p></div>
+<section id="parts"><h2>Part by part</h2>
+<div class="card"><div class="meta"><span>Part 1</span><span>1 min</span></div><h3>The bottom line</h3><p>In the AI world, a test for models is called a benchmark. Mercor publishes benchmarks for free. That makes AI labs and the press pay attention, and it gets Mercor's name next to every new model.</p><p>Then Mercor sells the much larger set of tasks behind each benchmark to the labs, who use it to train their models. The free benchmark is the shop window. The training data is the product.</p><div class="rem"><span class="v">9%</span><span>Only about 9% of Mercor's flagship dataset is free. The rest is for sale.</span></div></div>
+<div class="card"><div class="meta"><span>Part 2</span><span>2 min</span></div><h3>The test is free, the data is sold</h3><p>Take Mercor's best-known benchmark, APEX-Agents. Anyone can download 240 of its tasks. But the license only allows using them to test a model, not to train one.</p><p>Behind those 240 tasks sit 2,620 tasks that Mercor sells for training. Its other benchmarks work the same way: a small free test in front, a much bigger dataset for sale behind it. The biggest is 12,000 tasks.</p><div class="rem"><span class="v">240 vs 2,620</span><span>Free tasks versus tasks for sale, for the same benchmark.</span></div></div>
+<div class="card"><div class="meta"><span>Part 3</span><span>2 min</span></div><h3>What's in the catalog</h3><p>Mercor's website lists 43 benchmarks. Only 8 are its own or built with a partner. 10 are well-known public benchmarks that Mercor added its own private tasks to. The other 25 belong to other people, and Mercor simply runs them. That still puts Mercor's name in front of anyone looking at those benchmarks.</p><p>Mercor puts the most detail on its own pages: error ranges on the scores, who wrote the tasks, and an FAQ. The other pages are thin. Every page ends with a "Get in touch" button.</p><div class="rem"><span class="v">43</span><span>Benchmarks listed. Only 8 are Mercor's own or built with a partner.</span></div></div>
+<div class="card"><div class="meta"><span>Part 4</span><span>2 min</span></div><h3>The chart that sells fresh data</h3><p>For the 10 public benchmarks it extended, Mercor shows two scores side by side. One is how a model does on the public version. The other is how it does on Mercor's new private tasks, which the model can't have seen before.</p><p>On one coding benchmark, top models score about 84% on the public version and about 46% on Mercor's private tasks. The message to a lab is simple: public tests flatter your model, and Mercor has fresh tasks that don't.</p><div class="rem"><span class="v">84% → 46%</span><span>Top models' scores on public tasks versus Mercor's fresh ones.</span></div></div>
+<div class="card"><div class="meta"><span>Part 5</span><span>1 min</span></div><h3>How Mercor sells</h3><p>Mercor's data page lays out six steps, each a bigger commitment than the last: look at the free scoreboard, get free samples the same day, license a ready-made dataset, extend it with a custom project, order a custom dataset, or become a full research partner.</p><p>There are no public prices. The only way in is a contact form.</p><div class="rem"><span class="v">6 steps</span><span>From a free scoreboard to a full research partnership.</span></div></div>
+<div class="card"><div class="meta"><span>Part 6</span><span>1 min</span></div><h3>What "in partnership with" means</h3><p>Some benchmarks carry a well-known partner's name, such as Harvey (legal AI), Ramp (finance software) or Google. The same label covers three very different deals. Sometimes the partner built it and Mercor only hosts the scoreboard. Sometimes they built it together. Sometimes Mercor built it with the partner's input.</p><p>Either way, the partner lends Mercor credibility in a field where it has none of its own.</p><div class="rem"><span class="v">3 deals</span><span>Three different kinds of partnership behind one label.</span></div></div>
+<div class="card"><div class="meta"><span>Part 7</span><span>2 min</span></div><h3>How Mercor proves quality</h3><p>Mercor doesn't publish a checklist, but its research papers describe the same 12 quality checks every time. What stands out is that the checks come with numbers.</p><p>For example, other experts solved 20% of the tasks again from scratch to make sure they were fair. As a result, about 10% of tasks were fixed. And the AI that grades answers agrees with human experts 98.5% of the time. Numbers like these are why AI labs trust Mercor's scores.</p><div class="rem"><span class="v">98.5%</span><span>How often Mercor's AI grader agrees with human experts.</span></div></div>
+<div class="card"><div class="meta"><span>Part 8</span><span>1 min</span></div><h3>How a launch works</h3><p>Mercor launches every new benchmark the same way. The research paper goes online a day early, so there's something to cite. The next day the blog post, the scoreboard and the free data all go live together. News coverage follows a day later.</p><p>The weak spot is what comes after. When Mercor releases a new version, the old one doesn't point to it. And the free data sometimes arrives weeks after launch.</p><div class="rem"><span class="v">1 day early</span><span>The research paper goes up the day before everything else.</span></div></div>
+<div class="card"><div class="meta"><span>Part 9</span><span>1 min</span></div><h3>How fast Mercor tests new models</h3><p>When a new AI model comes out, Mercor tests it within days and adds it to its scoreboards. On 12 November its boards already showed several brand-new models from Anthropic, OpenAI and Google.</p><p>That speed matters, because every model launch is a news story, and Mercor's name shows up in it.</p><div class="rem"><span class="v">Days</span><span>How long Mercor takes to add a new model to its scoreboards.</span></div></div>
+<div class="card"><div class="meta"><span>Part 10</span><span>1 min</span></div><h3>Where Mercor slips</h3><p>Mercor moves fast, and its own pages contradict each other. One page says a benchmark came out in March; the paper says July. One page says 100 tasks; the paper says 160. One page claims 5 million experts, another 4 million. Old versions don't point to new ones.</p><p>An AI lab checking Mercor's claims would notice these.</p><div class="rem"><span class="v">100 vs 160</span><span>Two different task counts Mercor gives for the same benchmark.</span></div></div>
+</section>
+<section id="words"><h2>Words you'll hear</h2><dl>
+<div><dt>Benchmark</dt><dd>A test for AI models: a fixed set of tasks, with a score for how many each model gets right.</dd></div>
+<div><dt>Training data</dt><dd>Example tasks with correct answers that AI labs use to teach their models. This is what Mercor sells.</dd></div>
+<div><dt>Leaderboard</dt><dd>The public scoreboard for a benchmark, ranking models by score.</dd></div>
+<div><dt>Private (held-out) tasks</dt><dd>Tasks kept secret so no model can have seen them during training. Scores on them are more honest.</dd></div>
+<div><dt>Contamination</dt><dd>When test tasks leak into a model's training data. The model then scores higher than it should, like a student who saw the exam.</dd></div>
+<div><dt>Score (pass@1)</dt><dd>The share of tasks a model gets right on the first try. Mercor runs each task a few times and averages the result.</dd></div>
+<div><dt>Error range (±)</dt><dd>How much a score could move by chance. If two models are closer than this, neither is really ahead.</dd></div>
+<div><dt>Headroom</dt><dd>How much room models still have to improve. A benchmark where the best model scores 20 to 30% is hard enough to be useful but not hopeless.</dd></div>
+<div><dt>AI grader</dt><dd>An AI model that marks answers against a checklist, instead of a human doing it. It's only trusted if it agrees with human experts.</dd></div>
+<div><dt>Evaluation-only license</dt><dd>You may use the free tasks to test a model, but not to train one. Training data has to be bought.</dd></div>
+<div><dt>arXiv</dt><dd>The free website where AI research papers are posted.</dd></div>
+<div><dt>Hugging Face</dt><dd>The main website where AI datasets and models are shared and downloaded.</dd></div>
+<div><dt>APEX</dt><dd>Mercor's own benchmark brand, for example APEX-Agents and APEX-Accounting.</dd></div>
+</dl></section>
+<section id="questions"><h2>Questions you might get</h2><div class="qa">
+<div class="q"><b>Is Mercor's catalog mostly its own work?</b><p>No. 25 of its 43 benchmarks belong to other people; Mercor just runs them. 8 are its own or built with partners.</p></div>
+<div class="q"><b>How does Mercor make money from free tests?</b><p>The free test earns attention. The money comes from selling the larger set of tasks behind it to AI labs for training, from samples up to custom datasets.</p></div>
+<div class="q"><b>Is the drop from 84% to 46% real?</b><p>We can't tell from outside. Mercor doesn't show that its private tasks are equally hard as the public ones, so some of the drop may just be harder tasks.</p></div>
+<div class="q"><b>Can we trust Mercor's quality numbers?</b><p>We checked two of its research papers directly and the numbers are there. Mercor itself notes one risk: its AI graders come from the same labs whose models are being scored.</p></div>
+<div class="q"><b>How current is this?</b><p>Everything was read on 12 November 2026. Mercor's scoreboards change weekly.</p></div>
 </div></section>
-<section id="qa"><h2>Likely questions, short answers</h2><div class="qa">
-<div class="q"><b>Is Mercor's catalog mostly its own work?</b><p>No. 25 of its 43 pages are other people's benchmarks it runs. 8 are its own or built with partners.</p></div>
-<div class="q"><b>How do they make money from this?</b><p>Licensing. The public set is evaluation-only. The training data behind it is sold, from samples up to custom datasets. No prices are public.</p></div>
-<div class="q"><b>Is the held-out drop real, or are the new tasks just harder?</b><p>We can't tell from outside. They don't publish a difficulty match between the two sets.</p></div>
-<div class="q"><b>Can we trust their quality numbers?</b><p>We checked the APEX-Agents and APEX-Accounting papers directly. The numbers are there. They also disclose a self-preference risk, because judges come from labs being scored.</p></div>
-<div class="q"><b>What does "in partnership with" mean?</b><p>Three different deals: the partner builds and Mercor hosts, the two co-build, or Mercor builds with the partner's input.</p></div>
-<div class="q"><b>Where does their process slip?</b><p>Dates and task counts disagree between pages, old versions don't point to new ones, and 35 of 43 pages have no uncertainty, FAQ or date.</p></div>
-<div class="q"><b>How fast do they rerun new models?</b><p>Within days. On 2026-11-12 their boards already had Fable 5.2, GPT-6.1 Sol and Gemini 4 Carbon.</p></div>
-<div class="q"><b>How current is this?</b><p>Read on 2026-11-12. Their boards change weekly, so the model lists may already be out of date.</p></div>
-</div></section>
-<section id="terms"><h2>Terms on the page</h2><div class="gl">
-<div><span class="t">pass@1</span><span class="x">Share of tasks a model solves in one attempt, averaged over k runs.</span></div>
-<div><span class="t">k</span><span class="x">Runs per task. Mercor uses 3 to 8. More runs, tighter error bars.</span></div>
-<div><span class="t">± / CI</span><span class="x">Uncertainty on a score. A gap smaller than it isn't a real lead.</span></div>
-<div><span class="t">Held-out</span><span class="x">Tasks kept private so models can't have trained on them.</span></div>
-<div><span class="t">Extended benchmark</span><span class="x">A public benchmark plus new private tasks. Shown with two scores.</span></div>
-<div><span class="t">Headroom</span><span class="x">How far the best model is from 100%. A top score of 20–30% means hard but not hopeless.</span></div>
-<div><span class="t">LLM judge</span><span class="x">An AI model that grades answers against a rubric.</span></div>
-<div><span class="t">Judge validation</span><span class="x">How often the AI judge agrees with expert graders. Mercor: 97–98.5%.</span></div>
-<div><span class="t">κ (kappa)</span><span class="x">Agreement between graders after removing chance. 0.857 is strong.</span></div>
-<div><span class="t">Independent re-solve</span><span class="x">Experts who never saw a task solve it fresh, to prove it's fair and solvable.</span></div>
-<div><span class="t">Contamination</span><span class="x">Test tasks leaking into training data, which inflates scores.</span></div>
-<div><span class="t">Harness</span><span class="x">The code that runs a model on a task: tools, limits, environment.</span></div>
-<div><span class="t">Harbor</span><span class="x">A task container format. Mercor ships in it.</span></div>
-<div><span class="t">Archipelago</span><span class="x">Mercor's open-source harness and environment.</span></div>
-<div><span class="t">Gated HF set</span><span class="x">A Hugging Face dataset you must accept terms to download.</span></div>
-<div><span class="t">CC-BY-4.0, eval only</span><span class="x">Free to use with credit, but only for evaluation. No training.</span></div>
-<div><span class="t">APEX</span><span class="x">Mercor's benchmark brand: APEX-Agents, APEX-SWE, APEX-Accounting and others.</span></div>
-<div><span class="t">PLE</span><span class="x">Physical-Engineering's Last Exam, co-launched with Google Cloud AI Research.</span></div>
-</div></section>
-<section id="prep"><h2>Before you present</h2><ol class="prep">
-<li><b>Recheck Mercor's newest models</b> on mercor.com/apex if you present after this week.</li>
-<li><b>Press T</b> to hide the talk track before you share your screen. J and K move between beats.</li>
-<li><b>Say the evidence label</b> when quoting an R or I item.</li>
-</ol><div class="ev"><div><span class="k">V</span><b>Verified</b><span class="sub">Read on the primary source by us.</span></div><div><span class="k">R</span><b>Researched</b><span class="sub">From a research agent with the source cited, not re-read.</span></div><div><span class="k">I</span><b>Inferred</b><span class="sub">Our reading of indirect evidence. Say "it looks like".</span></div></div></section>
-<footer>Compiled from public sources as of 2026-11-12. <a href="index.html">Full Mercor teardown</a></footer></div>
+<footer>Compiled from public sources as of 12 November 2026. <a href="index.html">Full Mercor teardown</a></footer>
+</div>
