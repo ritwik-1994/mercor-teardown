@@ -2,11 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mercor Briefing</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a presenter's run sheet. Sticky beat rail on the left, beats down the right; each beat = claim, evidence visual, talk track. Violet = Mercor, teal = accent. */
+/* Layout: a presenter's run sheet. Sticky beat rail on the left, beats down the right; each beat = claim, evidence visual, talk track. Violet = Mercor, teal = Turing, everywhere. */
 :root{
   --bg:#F4F6F9; --surface:#FFFFFF; --ink:#131722; --muted:#586174; --line:#DCE1E9;
   --them:#6D3FD8; --them-soft:#ECE6FB; --us:#0B7A70; --us-soft:#DDF2EF;
@@ -188,7 +186,7 @@ th.us-col{color:var(--us)} th.them-col{color:var(--them)}
 .pair .w b{color:var(--them); font-weight:600}
 .pair .o b{color:var(--us); font-weight:600}
 
-/* field grid */
+/* core 12 */
 .core{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px}
 .chip{border-radius:6px; padding:8px; font-size:12.5px; line-height:1.3; display:flex; flex-direction:column; gap:3px; border:1px solid var(--line); min-width:0}
 .chip .cn{font-family:var(--f-mono); font-size:11px; color:var(--muted)}
@@ -246,174 +244,76 @@ footer{font-size:12px; color:var(--muted); border-top:1px solid var(--line); pad
 }
 @media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth} }
 </style>
-
-<header class="bar">
-  <div class="bar-in">
-    <div class="brand">Mercor briefing <span class="tag-int">Public edition</span></div>
-    <div class="spacer"></div>
-    <span class="kbd">J / K to move between beats</span>
-    <button class="btn" id="prevBtn" type="button">Previous</button>
-    <button class="btn" id="nextBtn" type="button">Next</button>
-    <a class="btn" style="text-decoration:none" href="publishing.html">Publishing version</a>
-    <a class="btn" style="text-decoration:none" href="briefing-cheatsheet.html">Cheatsheet</a>
-    <button class="btn" id="notesBtn" type="button" aria-pressed="false">Hide talk track</button>
-  </div>
-</header>
-
-<div class="shell" id="shell">
-  <nav class="rail" aria-label="Beats">
-    <div class="rail-h">Run sheet</div>
-    <a href="#b1"><span class="n">01</span><span>Bottom line</span><span class="t">1m</span></a>
-    <a href="#b2"><span class="n">02</span><span>Benchmarks sell data</span><span class="t">2m</span></a>
-    <a href="#b3"><span class="n">03</span><span>The catalog</span><span class="t">2m</span></a>
-    <a href="#b4"><span class="n">04</span><span>The two-score chart</span><span class="t">2m</span></a>
-    <a href="#b5"><span class="n">05</span><span>The sales ladder</span><span class="t">1m</span></a>
-    <a href="#b6"><span class="n">06</span><span>Partners</span><span class="t">1m</span></a>
-    <a href="#b7"><span class="n">07</span><span>12 quality gates</span><span class="t">2m</span></a>
-    <a href="#b8"><span class="n">08</span><span>Launch recipe</span><span class="t">1m</span></a>
-    <a href="#b9"><span class="n">09</span><span>Rerun speed</span><span class="t">1m</span></a>
-    <a href="#b11"><span class="n">10</span><span>Their weak spots</span><span class="t">1m</span></a>
-    <a href="#appendix"><span class="n">··</span><span>Appendix</span><span class="t"></span></a>
-    <div class="total"><span>Total</span><span>14 min</span></div>
-  </nav>
-
-  <main>
-    <section class="cover">
-      <div class="eyebrow">Briefing · How Mercor runs its benchmark business · 2026-11-16</div>
-      <h1>Mercor uses benchmarks to <em>sell data</em>.</h1>
-      <p class="lede">43 benchmark pages, one sales ladder and a fixed launch recipe. Here is how it works and where it slips, from public sources.</p>
-      <div class="cover-meta">
-                <span>Evidence as of <b>2026-11-12</b></span>
-        <span>Run time <b>14 min</b></span>
-      </div>
-      <div class="legend-pair">
-        <span><i class="sw" style="background:var(--them)"></i>Mercor</span>
-                <span><span class="ev">V</span> verified on the source &nbsp;<span class="ev">R</span> research agent, source cited &nbsp;<span class="ev">I</span> inferred</span>
-      </div>
-    </section>
-
-    <!-- 01 -->
-    <section class="beat" id="b1">
-      <div class="beat-h"><span class="beat-n">01</span><span class="beat-time">1 min</span></div>
-      <h2>The bottom line in five numbers</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="stats">
-            <div class="stat"><span class="v them">9%</span><span class="l">of APEX-Agents is public. The other 91% is sold as training data.</span></div>
-            <div class="stat"><span class="v them">43</span><span class="l">benchmark pages, each ending in "Get in touch"</span></div>
-            <div class="stat"><span class="v them">−36 pts</span><span class="l">Opus 5.5 on public vs held-out Terminal-Bench 2.1</span></div>
-            <div class="stat"><span class="v them">12</span><span class="l">quality gates in their papers, most with published numbers</span></div>
-            <div class="stat"><span class="v them">5</span><span class="l">of the newest frontier models already on their boards</span></div>
-          </div>
-          
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>Mercor's leaderboards are a storefront. The free benchmark gets a lab's attention. The licensed dataset behind it is what they charge for.</p>
-          <p>They do this at scale, with proof of quality and fast reruns. I'll show how each piece works and where it slips.</p>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 02 -->
-    <section class="beat" id="b2">
-      <div class="beat-h"><span class="beat-n">02</span><span class="beat-time">2 min</span><span class="ev">V</span></div>
-      <h2>The benchmark is free. The data behind it is the product.</h2>
-      <p class="claim">The public APEX-Agents set is 240 tasks, gated on Hugging Face and licensed for evaluation only. The licensable set is 2,620 tasks across 8 domains.</p>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="waffle-wrap">
-            <div class="waffle" aria-label="9 of 100 squares filled: the public share of APEX-Agents">
-              <i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:8px;font-size:14px">
-              <span class="cap">APEX-Agents, each square ≈ 26 tasks</span>
-              <span><i class="sw" style="background:var(--them)"></i><b>240</b> public: CC-BY-4.0, "exclusively for model evaluation", click-through gate</span>
-              <span><i class="sw" style="background:var(--them-soft);border:1px solid var(--them)"></i><b>2,380</b> more licensable for training</span>
-            </div>
-          </div>
-          <div class="cap">Licensable volume behind four public boards (tasks)</div>
-          <div class="hbars">
-            <div class="hb"><span>SWE-bench Extended</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">12,000</span></div>
-            <div class="hb"><span>Terminal-Bench exp.</span><span class="track"><span class="fill" style="width:83.3%"></span></span><span class="val">10,000</span></div>
-            <div class="hb"><span>BrowseComp</span><span class="track"><span class="fill" style="width:29.7%"></span></span><span class="val">3,558</span></div>
-            <div class="hb"><span>APEX-Agents</span><span class="track"><span class="fill" style="width:21.8%"></span><span class="pub" style="width:2%"></span></span><span class="val">2,620</span></div>
-          </div>
-          <p class="src">Source: mercor.com/apex/off-the-shelf-data and the APEX-Agents Hugging Face card, read 2026-11-12.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>This is the business model on one slide. The public set is small, open and citable. It earns them the leaderboard and the papers.</p>
-          <p>Behind each public board sits a much bigger licensable set. For SWE-bench that's 12,000 tasks.</p>
-          <p>The public license says evaluation only. Training on it is forbidden. So a lab that wants the data has to buy it.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 03 -->
-    <section class="beat" id="b3">
-      <div class="beat-h"><span class="beat-n">03</span><span class="beat-time">2 min</span><span class="ev">V</span></div>
-      <h2>43 pages in four tiers. The more they own a benchmark, the deeper its page.</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="tierbar" role="img" aria-label="43 pages: 6 partner, 2 own, 10 extended, 25 open-source">
-            <div class="t1" style="flex:6">6</div><div class="t2" style="flex:2">2</div><div class="t3" style="flex:10">10</div><div class="t4" style="flex:25">25</div>
-          </div>
-          <div class="tierkey">
-            <div><b>6 · Industry partner</b><span class="src">Harvey LAB, APEX-Accounting (Ramp), PLE (Google), FrontierCode and APEX-SWE (Cognition), τ³-Banking (Sierra)</span></div>
-            <div><b>2 · Mercor-built</b><span class="src">APEX-Agents (240 tasks), APEX-1 (400)</span></div>
-            <div><b>10 · Mercor-extended</b><span class="src">A public benchmark plus held-out tasks. SWE-bench Verified, HLE, GDPval, Terminal-Bench 2.1 and more</span></div>
-            <div><b>25 · Open-source</b><span class="src">Third-party benchmarks they run. SciCode, GPQA Diamond, AIME 2025, HealthBench</span></div>
-          </div>
-          <div class="tw">
-            <table>
-              <thead><tr><th>What the page shows</th><th class="c">Own + partner (8)</th><th class="c">Extended (10)</th><th class="c">Open-source (25)</th></tr></thead>
-              <tbody>
-                <tr><td>Task count, leaderboard, sample, "Get in touch"</td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>8/8</span></td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>10/10</span></td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>25/25</span></td></tr>
-                <tr><td>± uncertainty on scores</td><td class="c"><span class="meter"><span><i style="width:87.5%"></i></span>7/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Who writes the tasks</td><td class="c"><span class="meter"><span><i style="width:87.5%"></i></span>7/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>FAQ</td><td class="c"><span class="meter"><span><i style="width:87.5%"></i></span>7/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Contamination or held-out wording</td><td class="c"><span class="meter"><span><i style="width:62.5%"></i></span>5/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Two scores, original vs held-out</td><td class="c"><span class="zero">0</span></td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>10/10</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Release date</td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>4/4 APEX</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="src">Plus a methodology page: 31 cards, each filling the same 11 fields (source, tasks, runs, metric, modality, task format, question format, harness, grading, judge, released). Global rule: max reasoning effort, pass@1, never best-of.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>Breadth gets them into every search. They run 25 benchmarks they didn't build, so a lab looking at SciCode or GPQA lands on Mercor.</p>
-          <p>Depth goes where they own the IP. Their own pages show uncertainty, who wrote the tasks and an FAQ. The third-party pages are thin.</p>
-          <p>Every page, thin or deep, ends in "Get in touch" and a link to buy data.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 04 -->
-    <section class="beat" id="b4">
-      <div class="beat-h"><span class="beat-n">04</span><span class="beat-time">2 min</span><span class="ev">V</span></div>
-      <h2>The chart that sells fresh data: scores drop by half on held-out tasks</h2>
-      <p class="claim">Each of the 10 "extended" pages puts a model's score on the public benchmark next to its score on Mercor's held-out tasks.</p>
-      <div class="beat-body">
-        <div class="panel chart">
-          <div class="cap">Terminal-Bench 2.1, pass@1, read 2026-11-12</div>
-          <svg viewBox="0 0 520 210" role="img" aria-label="Public vs held-out scores for three models: Opus 5.5 83.5 to 47.5, GPT-6.1 Sol 85.4 to 45.8, Grok 4.6 84.6 to 45.5">
+<style>
+.beat .show{font-size:18px; color:var(--muted); max-width:62ch}
+.say p{font-size:15px; line-height:1.6}
+.rem{display:flex; gap:16px; align-items:baseline; background:var(--them-soft); border-radius:8px; padding:12px 16px}
+.rem .v{font-family:var(--f-display); font-weight:700; font-size:26px; color:var(--them); white-space:nowrap; font-variant-numeric:tabular-nums}
+.rem span:last-child{font-size:16px}
+.beat.priv .rem{background:var(--us-soft)} .beat.priv .rem .v{color:var(--us)}
+.ptag{font-family:var(--f-mono); font-size:11px; color:var(--us); text-transform:uppercase; letter-spacing:.06em}
+.flowx{display:grid; grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr); gap:10px; align-items:center}
+.flowx .bx{border-radius:10px; padding:18px; display:flex; flex-direction:column; gap:6px}
+.flowx .bx b{font-family:var(--f-display); font-size:20px}
+.flowx .a1{background:var(--bg); border:1px solid var(--line)} .flowx .a2{background:var(--them-soft)}
+.flowx .ar{text-align:center; font-size:24px; color:var(--muted)}
+.big2{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px}
+.big2 div{display:flex; flex-direction:column; gap:4px}
+.big2 .v{font-family:var(--f-display); font-weight:700; font-size:44px; line-height:1; color:var(--them); font-variant-numeric:tabular-nums}
+.big2 .v.us{color:var(--us)}
+.big2 .l{font-size:15px; color:var(--muted)}
+.two{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
+.two > div{display:flex; flex-direction:column; gap:8px; min-width:0}
+.two h3{font-size:16px}
+.two ul,.plain{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:15px}
+.contra{display:flex; flex-direction:column; gap:10px}
+.contra div{display:grid; grid-template-columns:150px minmax(0,1fr) minmax(0,1fr); gap:12px; font-size:15px; padding-bottom:10px; border-bottom:1px solid var(--line); align-items:baseline}
+.contra div:last-child{border-bottom:0}
+.contra b{font-weight:600}
+.contra .x{color:var(--them)}
+.info{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px}
+.info span{background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:8px 10px; font-size:14px}
+.rule{background:var(--them-soft); border-radius:8px; padding:12px 16px; font-size:15px}
+.phases4{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.phases4 div{display:flex; flex-direction:column; gap:6px; min-width:0}
+.phases4 h3{font-size:15px; border-bottom:2px solid var(--them); padding-bottom:4px}
+.phases4 ul{margin:0; padding-left:16px; font-size:14px; display:flex; flex-direction:column; gap:4px}
+.pipe{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.stage{background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:6px; font-size:15px; min-width:0}
+.stage .lv{font-family:var(--f-mono); font-size:11px; color:var(--them); letter-spacing:.06em; text-transform:uppercase}
+.stage b{font-family:var(--f-display); font-size:19px; font-weight:700}
+.stage.hl{border-color:var(--them); background:var(--them-soft)}
+@media (max-width:820px){ .pipe{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.tiers4{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.tiers4 div{border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:2px; font-size:14px}
+.tiers4 .n{font-family:var(--f-display); font-weight:700; font-size:30px}
+.tiers4 .d1{background:var(--them); color:#fff} .tiers4 .d2{background:color-mix(in srgb,var(--them) 60%,var(--surface)); color:#fff}
+.tiers4 .d3{background:var(--them-soft)} .tiers4 .d4{background:var(--bg); border:1px solid var(--line)}
+@media (max-width:560px){ .rem{flex-direction:column; gap:2px} .rem .v{white-space:normal} }
+@media (max-width:820px){ .two,.phases4{grid-template-columns:minmax(0,1fr)} .info{grid-template-columns:repeat(2,minmax(0,1fr))} .tiers4{grid-template-columns:repeat(2,minmax(0,1fr))} .flowx{grid-template-columns:minmax(0,1fr)} .flowx .ar{transform:rotate(90deg)} .contra div{grid-template-columns:minmax(0,1fr)} }
+</style>
+<header class="bar"><div class="bar-in"><div class="brand">Mercor briefing <span class="tag-int">Public edition</span></div><div class="spacer"></div><span class="kbd">J / K to move</span><button class="btn" id="prevBtn" type="button">Previous</button><button class="btn" id="nextBtn" type="button">Next</button><a class="btn" style="text-decoration:none" href="publishing.html">Publishing version</a><a class="btn" style="text-decoration:none" href="briefing-cheatsheet.html">Cheatsheet</a><button class="btn" id="notesBtn" type="button" aria-pressed="false">Hide talk track</button></div></header>
+<div class="shell" id="shell"><nav class="rail" aria-label="Parts"><div class="rail-h">Run sheet</div>
+<a href="#b1"><span class="n">01</span><span>The bottom line</span><span class="t">1m</span></a>
+<a href="#b2"><span class="n">02</span><span>The test is free, the data is sold</span><span class="t">2m</span></a>
+<a href="#b3"><span class="n">03</span><span>What's in the catalog</span><span class="t">2m</span></a>
+<a href="#b4"><span class="n">04</span><span>The chart that sells fresh data</span><span class="t">2m</span></a>
+<a href="#b5"><span class="n">05</span><span>How Mercor sells</span><span class="t">1m</span></a>
+<a href="#b6"><span class="n">06</span><span>What "in partnership with" means</span><span class="t">1m</span></a>
+<a href="#b7"><span class="n">07</span><span>How Mercor proves quality</span><span class="t">2m</span></a>
+<a href="#b8"><span class="n">08</span><span>How a launch works</span><span class="t">1m</span></a>
+<a href="#b9"><span class="n">09</span><span>How fast Mercor tests new models</span><span class="t">1m</span></a>
+<a href="#b10"><span class="n">10</span><span>Where Mercor slips</span><span class="t">1m</span></a>
+<a href="#appendix"><span class="n">··</span><span>Sources</span><span class="t"></span></a><div class="total"><span>Total</span><span>14 min</span></div></nav><main>
+<section class="cover"><div class="eyebrow">Briefing</div><h1>Mercor uses free tests to <em>sell data</em>.</h1><p class="lede">Mercor is a company that builds tests for AI models. It gives some of those tests away to get attention, then sells the much larger sets of tasks behind them to AI labs for training. This briefing shows how that works and where it slips.</p><div class="cover-meta"><span>Facts as of <b>12 November 2026</b></span><span>Run time <b>14 min</b></span></div><div class="legend-pair"><span><i class="sw" style="background:var(--them)"></i>Mercor</span></div></section>
+<section class="beat" id="b1"><div class="beat-h"><span class="beat-n">Part 1</span><span class="beat-time">1 min</span></div><h2>Mercor gives tests away to sell training data</h2><p class="show">The free test is the shop window. The data behind it is what Mercor sells.</p><div class="beat-body"><div class="panel"><div class="flowx"><div class="bx a1"><span class="cap">Free</span><b>The benchmark</b><span>A test anyone can see. Gets attention and gets Mercor's name next to new models.</span></div><div class="ar">→</div><div class="bx a2"><span class="cap">Paid</span><b>The training data</b><span>Thousands of similar tasks, sold to AI labs to train their models.</span></div></div><div class="rem"><span class="v">9%</span><span>Only about 9% of Mercor's flagship dataset is free. The rest is for sale.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>In the AI world, a test for models is called a benchmark. Mercor publishes benchmarks for free. That makes AI labs and the press pay attention, and it gets Mercor's name next to every new model.</p><p>Then Mercor sells the much larger set of tasks behind each benchmark to the labs, who use it to train their models. The free benchmark is the shop window. The training data is the product.</p></aside></div></section>
+<section class="beat" id="b2"><div class="beat-h"><span class="beat-n">Part 2</span><span class="beat-time">2 min</span></div><h2>Only 9% of Mercor's flagship dataset is free</h2><p class="show">Each square is about 26 tasks of APEX-Agents, Mercor's best-known benchmark.</p><div class="beat-body"><div class="panel"><div class="waffle-wrap"><div class="waffle" aria-label="9 of 100 squares filled"><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i class="p"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div style="display:flex;flex-direction:column;gap:10px;font-size:16px"><span><i class="sw" style="background:var(--them)"></i><b>240 tasks</b> free to download, for testing only</span><span><i class="sw" style="background:var(--them-soft);border:1px solid var(--them)"></i><b>2,380 more</b> sold to AI labs for training</span><span class="src">The biggest dataset Mercor sells has 12,000 tasks.</span></div></div><div class="rem"><span class="v">240 vs 2,620</span><span>Free tasks versus tasks for sale, for the same benchmark.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Take Mercor's best-known benchmark, APEX-Agents. Anyone can download 240 of its tasks. But the license only allows using them to test a model, not to train one.</p><p>Behind those 240 tasks sit 2,620 tasks that Mercor sells for training. Its other benchmarks work the same way: a small free test in front, a much bigger dataset for sale behind it. The biggest is 12,000 tasks.</p></aside></div></section>
+<section class="beat" id="b3"><div class="beat-h"><span class="beat-n">Part 3</span><span class="beat-time">2 min</span></div><h2>Most of Mercor's 43 benchmarks aren't its own</h2><p class="show">Mercor's catalog, in four groups by who built each benchmark.</p><div class="beat-body"><div class="panel"><div class="tiers4"><div class="d1"><span class="n">6</span>Built with a partner</div><div class="d2"><span class="n">2</span>Mercor's own</div><div class="d3"><span class="n">10</span>Public tests Mercor added private tasks to</div><div class="d4"><span class="n">25</span>Other people's tests Mercor just runs</div></div><div class="rem"><span class="v">43</span><span>Benchmarks listed. Only 8 are Mercor's own or built with a partner.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Mercor's website lists 43 benchmarks. Only 8 are its own or built with a partner. 10 are well-known public benchmarks that Mercor added its own private tasks to. The other 25 belong to other people, and Mercor simply runs them. That still puts Mercor's name in front of anyone looking at those benchmarks.</p><p>Mercor puts the most detail on its own pages: error ranges on the scores, who wrote the tasks, and an FAQ. The other pages are thin. Every page ends with a "Get in touch" button.</p></aside></div></section>
+<section class="beat" id="b4"><div class="beat-h"><span class="beat-n">Part 4</span><span class="beat-time">2 min</span></div><h2>Top models score about half as well on tasks they haven't seen</h2><p class="show">Each row is one AI model. The hollow dot is its score on the public test. The filled dot is its score on Mercor's fresh tasks.</p><div class="beat-body"><div class="panel"><svg viewBox="0 0 520 210" role="img" aria-label="Public vs held-out scores for three models: Opus 5.5 83.5 to 47.5, GPT-6.1 Sol 85.4 to 45.8, Grok 4.6 84.6 to 45.5">
             <g stroke="var(--line)" stroke-width="1"><line x1="110.0" y1="34" x2="110.0" y2="180"/><line x1="207.5" y1="34" x2="207.5" y2="180"/><line x1="305.0" y1="34" x2="305.0" y2="180"/><line x1="402.5" y1="34" x2="402.5" y2="180"/><line x1="500.0" y1="34" x2="500.0" y2="180"/></g>
             <text x="110.0" y="200" text-anchor="middle">0%</text><text x="207.5" y="200" text-anchor="middle">25%</text><text x="305.0" y="200" text-anchor="middle">50%</text><text x="402.5" y="200" text-anchor="middle">75%</text><text x="500.0" y="200" text-anchor="middle">100%</text>
-            <g><circle cx="116" cy="14" r="5" fill="var(--them)"/><text x="126" y="18">Held-out (Mercor tasks)</text>
-              <circle cx="320" cy="14" r="5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><text x="330" y="18">Public original</text></g>
+            <g><circle cx="116" cy="14" r="5" fill="var(--them)"/><text x="126" y="18">Mercor's fresh tasks</text>
+              <circle cx="320" cy="14" r="5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><text x="330" y="18">Public test</text></g>
             <g>
               <text class="lab" x="0" y="67">Opus 5.5</text>
               <line x1="295.25" y1="62" x2="435.65" y2="62" stroke="var(--them)" stroke-width="3" opacity=".35"/>
@@ -432,210 +332,14 @@ footer{font-size:12px; color:var(--muted); border-top:1px solid var(--line); pad
               <circle cx="287.45" cy="152" r="7" fill="var(--them)"/><circle cx="439.94" cy="152" r="7" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
               <text class="vt" x="275.45" y="157" text-anchor="end">45.5</text><text class="vo" x="451.94" y="157">84.6</text>
             </g>
-          </svg>
-          
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>This is the strongest page they have. Every frontier model scores mid-80s on the public test and mid-40s on fresh tasks.</p>
-          <p>A lab's RL lead reads that as: the public benchmark is contaminated, and Mercor has the uncontaminated version.</p>
-          
-          <div class="q"><b>If asked "Is the drop real or just harder tasks?"</b> We can't tell from outside. They don't publish a difficulty match between the two sets.</div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 05 -->
-    <section class="beat" id="b5">
-      <div class="beat-h"><span class="beat-n">05</span><span class="beat-time">1 min</span><span class="ev">V</span></div>
-      <h2>A six-step sales ladder, from free leaderboard to research partner</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="ladder">
-            <div class="rung"><span class="rn">1</span><b>Leaderboard</b><span>Free, public</span></div>
-            <div class="rung"><span class="rn">2</span><b>Samples</b><span>"Delivered same day"</span></div>
-            <div class="rung"><span class="rn">3</span><b>License</b><span>Off-the-shelf data</span></div>
-            <div class="rung"><span class="rn">4</span><b>Extend</b><span>Custom project on top</span></div>
-            <div class="rung"><span class="rn">5</span><b>Custom dataset</b><span>"Sourcing within days"</span></div>
-            <div class="rung"><span class="rn">6</span><b>Research partner</b><span>Full service</span></div>
-          </div>
-          <p class="src">No public prices. The only contact route is a work-email form. A side business pays companies for de-identified workplace data (Slack, Gmail, Salesforce and 100+ tools) and licenses it to labs.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>Each step is a bigger commitment, and every step is on one page. A buyer always knows what the next step is.</p>
-          <p>The "same day" sample promise matters. It shortens the time from interest to a sales call.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 06 -->
-    <section class="beat" id="b6">
-      <div class="beat-h"><span class="beat-n">06</span><span class="beat-time">1 min</span><span class="ev">V</span><span class="ev">R</span></div>
-      <h2>"In partnership with" covers three different deals</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="cols3">
-            <div class="mini"><span class="who">Partner builds, Mercor hosts</span><h3>Harvey LAB · FrontierCode · τ³-Banking</h3><p>Harvey's lawyers wrote 1,749 tasks from real matters. Mercor runs the board. Cognition's and Sierra's own posts don't mention Mercor.</p></div>
-            <div class="mini"><span class="who">Co-built</span><h3>Physical-Engineering's Last Exam</h3><p>With Google Cloud AI Research. 85 tasks, 29 public. Same-day blogs from both companies on 2026-11-03.</p></div>
-            <div class="mini"><span class="who">Mercor builds, partner adds</span><h3>APEX-Accounting · APEX-SWE</h3><p>Built on Ramp's eval system, and on Cognition's view of what engineers expect. Mercor staff wrote both papers.</p></div>
-          </div>
-          <p class="src">The partners are AI companies that each serve one industry (legal, fintech, coding, support), plus one frontier lab. Partners bring real workflows and a brand. Mercor brings experts, environments, runs, the board and the paper.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>Partners give them credibility in a domain they couldn't claim alone. A lawyer trusts a legal benchmark that Harvey wrote.</p>
-          <p>The Google one is the only true co-launch, and it's the most valuable kind.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 07 -->
-    <section class="beat" id="b7">
-      <div class="beat-h"><span class="beat-n">07</span><span class="beat-time">2 min</span><span class="ev">V</span><span class="ev">R</span></div>
-      <h2>Their quality claims come with numbers</h2>
-      <p class="claim">Mercor publishes no checklist, but its papers show the same 12 gates every time. Reconstructed from 6 arXiv papers.</p>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="gates">
-            <div class="gate"><span class="gn"><span>1</span><span>R</span></span><b>Scope</b><span class="gs">227 experts surveyed</span></div>
-            <div class="gate"><span class="gn"><span>2</span><span>R</span></span><b>Expert vetting</b><span class="gs">Interview + 1–2 h paid test</span></div>
-            <div class="gate"><span class="gn"><span>3</span><span>V</span></span><b>Authoring</b><span class="gs">22 of 33 worlds fictional</span></div>
-            <div class="gate"><span class="gn"><span>4</span><span>V</span></span><b>Review</b><span class="gs">~5% re-reviewed</span></div>
-            <div class="gate"><span class="gn"><span>5</span><span>V</span></span><b>Difficulty filter</b><span class="gs">599 candidates cut</span></div>
-            <div class="gate"><span class="gn"><span>6</span><span>V</span></span><b>Independent re-solve</b><span class="gs">20% solved, 10% fixed</span></div>
-            <div class="gate"><span class="gn"><span>7</span><span>V</span></span><b>Judge validation</b><span class="gs">98.5% · 97.1%, κ 0.857</span></div>
-            <div class="gate"><span class="gn"><span>8</span><span>R</span></span><b>Statistics</b><span class="gs">k = 3–8, with CIs</span></div>
-            <div class="gate"><span class="gn"><span>9</span><span>R</span></span><b>Held-out split</b><span class="gs">e.g. 400 / 100</span></div>
-            <div class="gate"><span class="gn"><span>10</span><span>V</span></span><b>License and legal</b><span class="gs">Eval-only click-through</span></div>
-            <div class="gate"><span class="gn"><span>11</span><span>V</span></span><b>Spec card</b><span class="gs">11 fields, 31 of 31</span></div>
-            <div class="gate"><span class="gn"><span>12</span><span>R</span></span><b>Reproducibility</b><span class="gs">Harness open-sourced</span></div>
-          </div>
-          <div class="cap">Top score at launch vs a 20–30% headroom band</div>
-          <div class="strip">
-            <svg viewBox="0 0 640 74" role="img" aria-label="Launch top scores: Agents 24%, SWE 25%, PLE 48%, Accounting 56%, against a 20 to 30 percent target band">
-              <rect x="146.0" y="14" width="58.0" height="34" fill="var(--us-soft)"/>
-              <line x1="30" y1="31" x2="610" y2="31" stroke="var(--line)" stroke-width="2"/>
-              <circle cx="169.2" cy="31" r="6" fill="var(--them)"/><circle cx="175.0" cy="31" r="6" fill="var(--them)" opacity=".7"/>
-              <circle cx="308.4" cy="31" r="6" fill="var(--them)"/><circle cx="354.8" cy="31" r="6" fill="var(--them)"/>
-              <text x="163.2" y="10" text-anchor="end">Agents 24</text><text x="181.0" y="10">SWE 25</text>
-              <text x="308.4" y="10" text-anchor="middle">PLE 48</text><text x="354.8" y="62" text-anchor="middle">Accounting 56</text>
-              <text x="175.0" y="62" text-anchor="middle" style="fill:var(--us)">20–30% target</text>
-              <text x="30" y="62">0%</text><text x="610" y="62" text-anchor="end">100%</text>
-            </svg>
-          </div>
-          <p class="src">Experts per benchmark: 42 to 256. Pay on PLE: about $4,663 per expert-written task <span class="ev">R</span>.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>This is why labs believe their scores. They don't say "expert-verified" and stop. They say 20% of tasks were re-solved from scratch and 10% got fixed. They say the AI judge agrees with experts 98.5% of the time.</p>
-          <p>Two of their four launches landed in the 20–30% band, hard enough to matter but not hopeless.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 08 -->
-    <section class="beat" id="b8">
-      <div class="beat-h"><span class="beat-n">08</span><span class="beat-time">1 min</span><span class="ev">R</span></div>
-      <h2>One launch recipe, repeated</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="tl">
-            <div><span class="when">T−7</span><b>Private repos</b><span class="eg">APEX-Agents HF repo: 01-14</span></div>
-            <div><span class="when">T−1</span><b>arXiv paper</b><span class="eg">2026-01-20</span></div>
-            <div class="t0"><span class="when">T0</span><b>Blog, board, open data</b><span class="eg">2026-01-21, all same day</span></div>
-            <div><span class="when">T+1</span><b>Press</b><span class="eg">TechCrunch, 01-22</span></div>
-            <div><span class="when">Weeks after</span><b>arXiv revisions</b><span class="eg">APEX-v1 reached v6</span></div>
-          </div>
-          <p class="src">Versioning is loose. A new version gets a new Hugging Face repo, and the blog post acts as the changelog. Old repos don't point to new ones. Open data sometimes ships 6–10 weeks late.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>The paper goes up a day early so the launch has something to cite. Then everything ships on the same day, and press follows.</p>
-          <p>The weak parts are versioning and late data. Old versions don't point to new ones, and open data sometimes ships weeks later.</p>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 09 -->
-    <section class="beat" id="b9">
-      <div class="beat-h"><span class="beat-n">09</span><span class="beat-time">1 min</span><span class="ev">V</span></div>
-      <h2>Their boards show new models within days</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="vs"><div class="a"><h3 class="them">Newest on Mercor boards, 2026-11-12</h3><ul><li>Claude Fable 5.2</li><li>GPT-6.1 Sol</li><li>Gemini 4 Carbon</li><li>Grok 4.6</li><li>Muse Wonder 1.0</li></ul></div></div>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>When a new model ships, labs and press go looking for scores. Mercor is there within days.</p>
-          <p>Each release becomes a news cycle with Mercor's name next to the model.</p>
-        </aside>
-      </div>
-    </section>
-
-    
-
-    <!-- 11 -->
-    <section class="beat" id="b11">
-      <div class="beat-h"><span class="beat-n">10</span><span class="beat-time">1 min</span><span class="ev">V</span></div>
-      <h2>Where they're weak</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="pairs">
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>Dates disagree.</b> APEX-Accounting "released March 2026" on one page; paper and blog are July.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>Task counts disagree.</b> 100 on the board, 160 in the paper.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>No changelog.</b> Old repos don't point to new versions.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>Thin pages.</b> 35 of 43 have no uncertainty, FAQ or date.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>No quality numbers in the data catalog.</b> The rigor stays in papers.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>License terms not public.</b></span></div>
-          </div>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>They move fast, and it shows. Their own pages contradict each other on dates, task counts and even their expert network: 5M+ on one page, 4M+ on another.</p>
-          <p>A lab doing diligence notices that. A single source for dates and counts would fix most of it.</p>
-        </aside>
-      </div>
-    </section>
-
-    
-
-    
-
-    <!-- appendix -->
-    <section class="beat" id="appendix">
-      <div class="beat-h"><span class="beat-n">Appendix</span></div>
-      <h2>What we can't see, and where this comes from</h2>
-      <div class="appendix">
-        <div class="panel">
-          <div class="cap">Can't see from outside → who could tell us</div>
-          <ul>
-            <li>Who signs off a release, and any partner veto → former Mercor research staff</li>
-            <li>Reviewers per task and offboarding rules → former Mercor contractors</li>
-            <li>Partner contracts and co-publishing rights → staff at Ramp, Harvey, Cognition, Google</li>
-            <li>Pricing, exclusivity, license terms → lab data buyers</li>
-            <li>Difficulty threshold and discard rates → not published</li>
-            <li>Revenue split across benchmarks, licensing and data → not public</li>
-          </ul>
-        </div>
-        <div class="panel">
-          <div class="cap">Sources and method</div>
-          <ul>
-            <li>43 benchmark pages on mercor.com/apex, plus the methodology, off-the-shelf data, /data and /partner pages, read 2026-11-12</li>
-            <li>6 arXiv papers. APEX-Agents and APEX-Accounting re-read directly</li>
-            <li>GitHub and Hugging Face records, partner and press posts, 2 job descriptions</li>
-                      </ul>
-          <p class="src"><span class="ev">V</span> verified on the primary source · <span class="ev">R</span> research agent, source cited, not re-read · <span class="ev">I</span> inferred</p>
-        </div>
-      </div>
-      <footer>Compiled from public sources: Mercor's site, arXiv, Hugging Face and GitHub, as of 2026-11-12. Boards change weekly. <a href="index.html">Full Mercor teardown</a></footer>
-    </section>
-  </main>
-</div>
-
+          </svg><div class="rem"><span class="v">84% → 46%</span><span>Top models' scores on public tasks versus Mercor's fresh ones.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>For the 10 public benchmarks it extended, Mercor shows two scores side by side. One is how a model does on the public version. The other is how it does on Mercor's new private tasks, which the model can't have seen before.</p><p>On one coding benchmark, top models score about 84% on the public version and about 46% on Mercor's private tasks. The message to a lab is simple: public tests flatter your model, and Mercor has fresh tasks that don't.</p></aside></div></section>
+<section class="beat" id="b5"><div class="beat-h"><span class="beat-n">Part 5</span><span class="beat-time">1 min</span></div><h2>Six steps from a free scoreboard to a big contract</h2><p class="show">Each step asks more of the customer than the one before.</p><div class="beat-body"><div class="panel"><div class="ladder"><div class="rung"><span class="rn">1</span><b>Free scoreboard</b></div><div class="rung"><span class="rn">2</span><b>Free samples, same day</b></div><div class="rung"><span class="rn">3</span><b>Buy a ready-made dataset</b></div><div class="rung"><span class="rn">4</span><b>Extend it</b></div><div class="rung"><span class="rn">5</span><b>Custom dataset</b></div><div class="rung"><span class="rn">6</span><b>Research partner</b></div></div><div class="rem"><span class="v">6 steps</span><span>From a free scoreboard to a full research partnership.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Mercor's data page lays out six steps, each a bigger commitment than the last: look at the free scoreboard, get free samples the same day, license a ready-made dataset, extend it with a custom project, order a custom dataset, or become a full research partner.</p><p>There are no public prices. The only way in is a contact form.</p></aside></div></section>
+<section class="beat" id="b6"><div class="beat-h"><span class="beat-n">Part 6</span><span class="beat-time">1 min</span></div><h2>One partner label, three different deals</h2><p class="show">All three are labelled "in partnership with". Who did the work is very different.</p><div class="beat-body"><div class="panel"><div class="cols3"><div class="mini"><span class="who">Partner did most of it</span><h3>Harvey, Cognition, Sierra</h3><p>The partner built it. Mercor runs the scoreboard.</p></div><div class="mini"><span class="who">Built together</span><h3>Google</h3><p>Built and launched together, on the same day.</p></div><div class="mini"><span class="who">Mercor did most of it</span><h3>Ramp, Cognition</h3><p>Mercor built it. The partner gave input.</p></div></div><div class="rem"><span class="v">3 deals</span><span>Three different kinds of partnership behind one label.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Some benchmarks carry a well-known partner's name, such as Harvey (legal AI), Ramp (finance software) or Google. The same label covers three very different deals. Sometimes the partner built it and Mercor only hosts the scoreboard. Sometimes they built it together. Sometimes Mercor built it with the partner's input.</p><p>Either way, the partner lends Mercor credibility in a field where it has none of its own.</p></aside></div></section>
+<section class="beat" id="b7"><div class="beat-h"><span class="beat-n">Part 7</span><span class="beat-time">2 min</span></div><h2>Mercor backs its quality claims with numbers</h2><p class="show">Three numbers from Mercor's research papers that answer "can we trust this test?"</p><div class="beat-body"><div class="panel"><div class="big2"><div><span class="v">20%</span><span class="l">of tasks solved again from scratch by other experts. Shows the tasks can be solved.</span></div><div><span class="v">98.5%</span><span class="l">agreement between the AI grader and human experts. Shows the marking is accurate.</span></div><div><span class="v">599</span><span class="l">candidate tasks, cut down to only the hardest. Shows the test is hard.</span></div></div><div class="rem"><span class="v">98.5%</span><span>How often Mercor's AI grader agrees with human experts.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Mercor doesn't publish a checklist, but its research papers describe the same 12 quality checks every time. What stands out is that the checks come with numbers.</p><p>For example, other experts solved 20% of the tasks again from scratch to make sure they were fair. As a result, about 10% of tasks were fixed. And the AI that grades answers agrees with human experts 98.5% of the time. Numbers like these are why AI labs trust Mercor's scores.</p></aside></div></section>
+<section class="beat" id="b8"><div class="beat-h"><span class="beat-n">Part 8</span><span class="beat-time">1 min</span></div><h2>Every launch follows the same recipe</h2><p class="show">The order Mercor releases things in.</p><div class="beat-body"><div class="panel"><div class="tl"><div><span class="when">A week before</span><b>Files set up privately</b></div><div><span class="when">Day before</span><b>Research paper online</b></div><div class="t0"><span class="when">Launch day</span><b>Blog, scoreboard and free data</b></div><div><span class="when">Day after</span><b>News coverage</b></div><div><span class="when">Weeks after</span><b>Paper corrected</b></div></div><div class="rem"><span class="v">1 day early</span><span>The research paper goes up the day before everything else.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Mercor launches every new benchmark the same way. The research paper goes online a day early, so there's something to cite. The next day the blog post, the scoreboard and the free data all go live together. News coverage follows a day later.</p><p>The weak spot is what comes after. When Mercor releases a new version, the old one doesn't point to it. And the free data sometimes arrives weeks after launch.</p></aside></div></section>
+<section class="beat" id="b9"><div class="beat-h"><span class="beat-n">Part 9</span><span class="beat-time">1 min</span></div><h2>New models appear on Mercor's scoreboards within days</h2><p class="show">The newest models on Mercor's scoreboards on 12 November.</p><div class="beat-body"><div class="panel"><div class="vs"><div class="a"><h3 class="them">On Mercor's scoreboards</h3><ul><li>Claude Fable 5.2</li><li>GPT-6.1 Sol</li><li>Gemini 4 Carbon</li><li>Grok 4.6</li><li>Muse Wonder 1.0</li></ul></div></div><div class="rem"><span class="v">Days</span><span>How long Mercor takes to add a new model to its scoreboards.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>When a new AI model comes out, Mercor tests it within days and adds it to its scoreboards. On 12 November its boards already showed several brand-new models from Anthropic, OpenAI and Google.</p><p>That speed matters, because every model launch is a news story, and Mercor's name shows up in it.</p></aside></div></section>
+<section class="beat" id="b10"><div class="beat-h"><span class="beat-n">Part 10</span><span class="beat-time">1 min</span></div><h2>Mercor's own pages contradict each other</h2><p class="show">The same fact, stated differently in two places.</p><div class="beat-body"><div class="panel"><div class="contra"><div><b>Release date</b><span>Methodology page: <span class="x">March 2026</span></span><span>Paper and blog: <span class="x">July 2026</span></span></div><div><b>Number of tasks</b><span>Scoreboard page: <span class="x">100</span></span><span>Research paper: <span class="x">160</span></span></div><div><b>Expert network</b><span>Data page: <span class="x">5 million+</span></span><span>Partner page: <span class="x">4 million+</span></span></div><div><b>Versions</b><span>New version: <span class="x">new download page</span></span><span>Old page: <span class="x">no link to the new one</span></span></div></div><div class="rem"><span class="v">100 vs 160</span><span>Two different task counts Mercor gives for the same benchmark.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Mercor moves fast, and its own pages contradict each other. One page says a benchmark came out in March; the paper says July. One page says 100 tasks; the paper says 160. One page claims 5 million experts, another 4 million. Old versions don't point to new ones.</p><p>An AI lab checking Mercor's claims would notice these.</p></aside></div></section>
+<section class="beat" id="appendix"><div class="beat-h"><span class="beat-n">Sources</span></div><h2>Where this comes from</h2><div class="appendix"><div class="panel"><div class="cap">Sources</div><ul><li>Mercor's website: 43 benchmark pages, the methodology page and its data pages, read 12 November 2026</li><li>Six Mercor research papers on arXiv, two of them checked line by line</li><li>Dates from Hugging Face, GitHub and news coverage</li></ul></div><div class="panel"><div class="cap">What we can't see from outside</div><ul><li>Who signs off a launch</li><li>How many reviewers each task gets</li><li>How many tasks are thrown out</li><li>What Mercor charges</li></ul></div></div><footer>Compiled from public sources. <a href="index.html">Full Mercor teardown</a> Mercor's scoreboards change weekly.</footer></section></main></div>
 <script>
 (function(){
   var shell = document.getElementById('shell');
@@ -644,9 +348,9 @@ footer{font-size:12px; color:var(--muted); border-top:1px solid var(--line); pad
     shell.classList.toggle('notes-off', off);
     btn.setAttribute('aria-pressed', off ? 'true' : 'false');
     btn.textContent = off ? 'Show talk track' : 'Hide talk track';
-    try{ localStorage.setItem('mercor-notes-off', off ? '1' : '0'); }catch(e){}
+    try{ localStorage.setItem('mercor-broad-notes-off', off ? '1' : '0'); }catch(e){}
   }
-  var saved = null; try{ saved = localStorage.getItem('mercor-notes-off'); }catch(e){}
+  var saved = null; try{ saved = localStorage.getItem('mercor-broad-notes-off'); }catch(e){}
   setNotes(saved === '1');
   btn.addEventListener('click', function(){ setNotes(!shell.classList.contains('notes-off')); });
 

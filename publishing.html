@@ -2,11 +2,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>How Mercor Publishes Benchmarks</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a presenter's run sheet. Sticky beat rail on the left, beats down the right; each beat = claim, evidence visual, talk track. Violet = Mercor, teal = accent. */
+/* Layout: a presenter's run sheet. Sticky beat rail on the left, beats down the right; each beat = claim, evidence visual, talk track. Violet = Mercor, teal = Turing, everywhere. */
 :root{
   --bg:#F4F6F9; --surface:#FFFFFF; --ink:#131722; --muted:#586174; --line:#DCE1E9;
   --them:#6D3FD8; --them-soft:#ECE6FB; --us:#0B7A70; --us-soft:#DDF2EF;
@@ -188,7 +186,7 @@ th.us-col{color:var(--us)} th.them-col{color:var(--them)}
 .pair .w b{color:var(--them); font-weight:600}
 .pair .o b{color:var(--us); font-weight:600}
 
-/* field grid */
+/* core 12 */
 .core{display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:6px}
 .chip{border-radius:6px; padding:8px; font-size:12.5px; line-height:1.3; display:flex; flex-direction:column; gap:3px; border:1px solid var(--line); min-width:0}
 .chip .cn{font-family:var(--f-mono); font-size:11px; color:var(--muted)}
@@ -247,216 +245,77 @@ footer{font-size:12px; color:var(--muted); border-top:1px solid var(--line); pad
 @media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth} }
 </style>
 <style>
-/* extra components for the publishing walkthrough */
-.pipe{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px}
-.stage{background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:6px; font-size:13.5px; position:relative; min-width:0}
+.beat .show{font-size:18px; color:var(--muted); max-width:62ch}
+.say p{font-size:15px; line-height:1.6}
+.rem{display:flex; gap:16px; align-items:baseline; background:var(--them-soft); border-radius:8px; padding:12px 16px}
+.rem .v{font-family:var(--f-display); font-weight:700; font-size:26px; color:var(--them); white-space:nowrap; font-variant-numeric:tabular-nums}
+.rem span:last-child{font-size:16px}
+.beat.priv .rem{background:var(--us-soft)} .beat.priv .rem .v{color:var(--us)}
+.ptag{font-family:var(--f-mono); font-size:11px; color:var(--us); text-transform:uppercase; letter-spacing:.06em}
+.flowx{display:grid; grid-template-columns:minmax(0,1fr) 40px minmax(0,1fr); gap:10px; align-items:center}
+.flowx .bx{border-radius:10px; padding:18px; display:flex; flex-direction:column; gap:6px}
+.flowx .bx b{font-family:var(--f-display); font-size:20px}
+.flowx .a1{background:var(--bg); border:1px solid var(--line)} .flowx .a2{background:var(--them-soft)}
+.flowx .ar{text-align:center; font-size:24px; color:var(--muted)}
+.big2{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px}
+.big2 div{display:flex; flex-direction:column; gap:4px}
+.big2 .v{font-family:var(--f-display); font-weight:700; font-size:44px; line-height:1; color:var(--them); font-variant-numeric:tabular-nums}
+.big2 .v.us{color:var(--us)}
+.big2 .l{font-size:15px; color:var(--muted)}
+.two{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px}
+.two > div{display:flex; flex-direction:column; gap:8px; min-width:0}
+.two h3{font-size:16px}
+.two ul,.plain{margin:0; padding-left:18px; display:flex; flex-direction:column; gap:6px; font-size:15px}
+.contra{display:flex; flex-direction:column; gap:10px}
+.contra div{display:grid; grid-template-columns:150px minmax(0,1fr) minmax(0,1fr); gap:12px; font-size:15px; padding-bottom:10px; border-bottom:1px solid var(--line); align-items:baseline}
+.contra div:last-child{border-bottom:0}
+.contra b{font-weight:600}
+.contra .x{color:var(--them)}
+.info{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:6px}
+.info span{background:var(--bg); border:1px solid var(--line); border-radius:6px; padding:8px 10px; font-size:14px}
+.rule{background:var(--them-soft); border-radius:8px; padding:12px 16px; font-size:15px}
+.phases4{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px}
+.phases4 div{display:flex; flex-direction:column; gap:6px; min-width:0}
+.phases4 h3{font-size:15px; border-bottom:2px solid var(--them); padding-bottom:4px}
+.phases4 ul{margin:0; padding-left:16px; font-size:14px; display:flex; flex-direction:column; gap:4px}
+.pipe{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.stage{background:var(--bg); border:1px solid var(--line); border-radius:8px; padding:14px; display:flex; flex-direction:column; gap:6px; font-size:15px; min-width:0}
 .stage .lv{font-family:var(--f-mono); font-size:11px; color:var(--them); letter-spacing:.06em; text-transform:uppercase}
-.stage b{font-family:var(--f-display); font-size:17px; font-weight:700}
-.stage ul{margin:0; padding-left:16px; display:flex; flex-direction:column; gap:2px; color:var(--muted)}
+.stage b{font-family:var(--f-display); font-size:19px; font-weight:700}
 .stage.hl{border-color:var(--them); background:var(--them-soft)}
-.spec{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px}
-.spec div{border:1px solid var(--line); border-radius:6px; padding:8px 10px; display:flex; flex-direction:column; gap:2px; font-size:13px; background:var(--bg); min-width:0}
-.spec div .k{font-family:var(--f-mono); font-size:11px; color:var(--muted)}
-.spec div b{font-weight:600}
-.spec div .e{font-family:var(--f-mono); font-size:12px; color:var(--them)}
-.phases{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:var(--s3)}
-.phase{display:flex; flex-direction:column; gap:6px; min-width:0}
-.phase .ph{font-family:var(--f-mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:2px solid var(--them); padding-bottom:4px}
-.proof{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--s4)}
-.proof div{display:flex; flex-direction:column; gap:4px; font-size:13.5px; min-width:0}
-.proof .v{font-family:var(--f-display); font-weight:700; font-size:34px; line-height:1.05; color:var(--them); font-variant-numeric:tabular-nums}
-.proof b{font-weight:600}
-.sym{display:inline-block; width:12px; height:12px; vertical-align:-1px}
-.launches td{font-family:var(--f-mono); font-size:12.5px; white-space:nowrap}
-.launches td:first-child{font-family:var(--f-body); font-size:14px; white-space:normal}
-.late{color:var(--warn); font-weight:500}
-.pkg{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:6px}
-.pkg div{border-radius:6px; padding:8px 10px; font-size:13px; display:flex; flex-direction:column; gap:2px; min-width:0}
-.pkg .f{font-family:var(--f-mono); font-size:11px}
-.pkg .al{background:var(--them-soft)} .pkg .us2{background:color-mix(in srgb,var(--them-soft) 55%,var(--bg))} .pkg .so{background:var(--bg); border:1px solid var(--line)} .pkg .nv{background:var(--warn-soft)}
-.diff td:nth-child(3){color:var(--us)}
-.check{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--s4)}
-.check ol,.check ul{margin:0; padding-left:18px; font-size:13.5px; display:flex; flex-direction:column; gap:4px}
-.check h3{font-size:15px}
-@media (max-width:1020px){ .spec{grid-template-columns:repeat(3,minmax(0,1fr))} .pkg{grid-template-columns:repeat(2,minmax(0,1fr))} }
-@media (max-width:820px){ .pipe,.phases{grid-template-columns:repeat(2,minmax(0,1fr))} .check,.proof{grid-template-columns:minmax(0,1fr)} }
-@media (max-width:560px){ .pipe,.phases,.spec,.pkg{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:820px){ .pipe{grid-template-columns:repeat(2,minmax(0,1fr))} }
+.tiers4{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px}
+.tiers4 div{border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:2px; font-size:14px}
+.tiers4 .n{font-family:var(--f-display); font-weight:700; font-size:30px}
+.tiers4 .d1{background:var(--them); color:#fff} .tiers4 .d2{background:color-mix(in srgb,var(--them) 60%,var(--surface)); color:#fff}
+.tiers4 .d3{background:var(--them-soft)} .tiers4 .d4{background:var(--bg); border:1px solid var(--line)}
+@media (max-width:560px){ .rem{flex-direction:column; gap:2px} .rem .v{white-space:normal} }
+@media (max-width:820px){ .two,.phases4{grid-template-columns:minmax(0,1fr)} .info{grid-template-columns:repeat(2,minmax(0,1fr))} .tiers4{grid-template-columns:repeat(2,minmax(0,1fr))} .flowx{grid-template-columns:minmax(0,1fr)} .flowx .ar{transform:rotate(90deg)} .contra div{grid-template-columns:minmax(0,1fr)} }
 </style>
-
-<header class="bar">
-  <div class="bar-in">
-    <div class="brand">How Mercor publishes <span class="tag-int">Public edition</span></div>
-    <div class="spacer"></div>
-    <span class="kbd">J / K to move between beats</span>
-    <button class="btn" id="prevBtn" type="button">Previous</button>
-    <button class="btn" id="nextBtn" type="button">Next</button>
-    <a class="btn" style="text-decoration:none" href="briefing.html">Broad version</a>
-    <a class="btn" style="text-decoration:none" href="publishing-cheatsheet.html">Cheatsheet</a>
-    <button class="btn" id="notesBtn" type="button" aria-pressed="false">Hide talk track</button>
-  </div>
-</header>
-
-<div class="shell" id="shell">
-  <nav class="rail" aria-label="Beats">
-    <div class="rail-h">Run sheet</div>
-    <a href="#b1"><span class="n">01</span><span>The pipeline</span><span class="t">1m</span></a>
-    <a href="#b2"><span class="n">02</span><span>Why they publish</span><span class="t">1m</span></a>
-    <a href="#b3"><span class="n">03</span><span>L1 · Catalog slot</span><span class="t">2m</span></a>
-    <a href="#b4"><span class="n">04</span><span>L2 · Spec card</span><span class="t">2m</span></a>
-    <a href="#b5"><span class="n">05</span><span>L2 · Two-score page</span><span class="t">1m</span></a>
-    <a href="#b6"><span class="n">06</span><span>L3 · 12 gates</span><span class="t">2m</span></a>
-    <a href="#b7"><span class="n">07</span><span>L3 · Three proofs</span><span class="t">1m</span></a>
-    <a href="#b8"><span class="n">08</span><span>L4 · Launch package</span><span class="t">1m</span></a>
-    <a href="#b9"><span class="n">09</span><span>L4 · Launch timing</span><span class="t">2m</span></a>
-    <a href="#b10"><span class="n">10</span><span>L4 · After launch</span><span class="t">1m</span></a>
-    <a href="#b11"><span class="n">11</span><span>Where it breaks</span><span class="t">1m</span></a>
-    <a href="#appendix"><span class="n">··</span><span>Appendix</span><span class="t"></span></a>
-    <div class="total"><span>Total</span><span>15 min</span></div>
-  </nav>
-
-  <main>
-    <section class="cover">
-      <div class="eyebrow">Briefing · Publishing process · 2026-11-16</div>
-      <h1>How Mercor takes a benchmark <em>from idea to live page</em>.</h1>
-      <p class="lede">Reverse-engineered from 43 benchmark pages, 31 methodology cards, 6 arXiv papers and the repo history of 5 launches. Four levels: where it sits, what the page must show, what must be true before it ships, and how it launches and changes.</p>
-      <div class="cover-meta">
-                <span>Evidence as of <b>2026-11-12</b></span>
-        <span>Run time <b>15 min</b></span>
-      </div>
-      <div class="legend-pair">
-        <span><i class="sw" style="background:var(--them)"></i>Mercor</span>
-                <span><span class="ev">V</span> verified on the source &nbsp;<span class="ev">R</span> research agent, source cited &nbsp;<span class="ev">I</span> inferred</span>
-      </div>
-    </section>
-
-    <!-- 01 -->
-    <section class="beat" id="b1">
-      <div class="beat-h"><span class="beat-n">01</span><span class="beat-time">1 min</span></div>
-      <h2>Four levels, one repeatable process</h2>
-      <p class="claim">Mercor publishes no checklist. But every Mercor-built benchmark goes through the same four levels, in the same order.</p>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="pipe">
-            <div class="stage"><span class="lv">Level 1</span><b>Catalog slot</b><ul><li>4 tiers by who owns it</li><li>Tier sets page depth</li></ul></div>
-            <div class="stage"><span class="lv">Level 2</span><b>Page template</b><ul><li>11-field spec card</li><li>Fixed run rule</li><li>Two scores if extended</li></ul></div>
-            <div class="stage hl"><span class="lv">Level 3</span><b>Pre-publish gates</b><ul><li>12 gates</li><li>Most with a published number</li></ul></div>
-            <div class="stage"><span class="lv">Level 4</span><b>Launch and after</b><ul><li>arXiv T−1, all else T0</li><li>New version = new repo</li></ul></div>
-          </div>
-          
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>I went four levels deep. First, what a buyer sees. Then the template behind each page. Then the checks behind the template. Then the launch and what happens after.</p>
-          <p>Level 3 is the one to remember. It's why labs trust their numbers.</p>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 02 -->
-    <section class="beat" id="b2">
-      <div class="beat-h"><span class="beat-n">02</span><span class="beat-time">1 min</span><span class="ev">V</span></div>
-      <h2>Why they publish at all: the benchmark sells the dataset</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="stats">
-            <div class="stat"><span class="v them">240</span><span class="l">APEX-Agents tasks public, evaluation only</span></div>
-            <div class="stat"><span class="v them">2,620</span><span class="l">APEX-Agents tasks licensable for training</span></div>
-            <div class="stat"><span class="v them">43 / 43</span><span class="l">pages end in "Get in touch" and a link to buy data</span></div>
-          </div>
-          <p class="src">So the publishing process is tuned for trust and attention, not completeness. The public set is about 9% of what they sell.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>One line of context before the process. Publishing is their marketing. The public benchmark earns citations and attention. The licensed dataset is the revenue.</p>
-          <p>That explains every choice that follows. They show enough to be trusted, and keep most of the data back.</p>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 03 -->
-    <section class="beat" id="b3">
-      <div class="beat-h"><span class="beat-n">03</span><span class="beat-time">2 min</span><span class="ev">V</span></div>
-      <h2>Level 1: who owns it decides where it sits and how deep the page goes</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="tierbar" role="img" aria-label="43 pages: 6 partner, 2 own, 10 extended, 25 open-source">
-            <div class="t1" style="flex:6">6</div><div class="t2" style="flex:2">2</div><div class="t3" style="flex:10">10</div><div class="t4" style="flex:25">25</div>
-          </div>
-          <div class="tierkey">
-            <div><b>6 · Industry partner</b><span class="src">"In partnership with [logo]"</span></div>
-            <div><b>2 · Mercor-built</b><span class="src">APEX-Agents, APEX-1</span></div>
-            <div><b>10 · Mercor-extended</b><span class="src">Public benchmark plus held-out tasks</span></div>
-            <div><b>25 · Open-source</b><span class="src">Others' benchmarks, run by Mercor</span></div>
-          </div>
-          <div class="tw">
-            <table>
-              <thead><tr><th>What the page shows</th><th class="c">Own + partner (8)</th><th class="c">Extended (10)</th><th class="c">Open-source (25)</th></tr></thead>
-              <tbody>
-                <tr><td>Task count, leaderboard, sample, "Get in touch"</td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>8/8</span></td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>10/10</span></td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>25/25</span></td></tr>
-                <tr><td>± uncertainty on scores</td><td class="c"><span class="meter"><span><i style="width:87.5%"></i></span>7/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Who writes the tasks</td><td class="c"><span class="meter"><span><i style="width:87.5%"></i></span>7/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>FAQ</td><td class="c"><span class="meter"><span><i style="width:87.5%"></i></span>7/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>How it was built, in steps</td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>4/4 APEX</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Contamination or held-out wording</td><td class="c"><span class="meter"><span><i style="width:62.5%"></i></span>5/8</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Two scores, original vs held-out</td><td class="c"><span class="zero">0</span></td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>10/10</span></td><td class="c"><span class="zero">0</span></td></tr>
-                <tr><td>Release date</td><td class="c"><span class="meter"><span><i style="width:100%"></i></span>4/4 APEX</span></td><td class="c"><span class="zero">0</span></td><td class="c"><span class="zero">0</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>The first decision when something is published is which shelf it goes on. That depends on who built it.</p>
-          <p>Their own pages get the full treatment: uncertainty, who wrote the tasks, an FAQ, how it was built. Pages for other people's benchmarks get the minimum.</p>
-          <div class="q"><b>Gap they leave:</b> the tier implies who built it but doesn't say. APEX-Accounting is under "partners", but its methodology card credits only Mercor.</div>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 04 -->
-    <section class="beat" id="b4">
-      <div class="beat-h"><span class="beat-n">04</span><span class="beat-time">2 min</span><span class="ev">V</span></div>
-      <h2>Level 2: every benchmark gets the same 11-field spec card</h2>
-      <p class="claim">The methodology page has 31 cards, and all 31 fill all 11 fields. One global rule sits above them all.</p>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="spec">
-            <div><span class="k">1</span><b>Source</b><span class="e">who built it</span></div>
-            <div><span class="k">2</span><b>Tasks</b><span class="e">count</span></div>
-            <div><span class="k">3</span><b>Runs</b><span class="e">k = 3 on 18 cards</span></div>
-            <div><span class="k">4</span><b>Metric</b><span class="e">pass@1 on 22</span></div>
-            <div><span class="k">5</span><b>Modality</b><span class="e">text, image…</span></div>
-            <div><span class="k">6</span><b>Task format</b><span class="e">agentic, QA…</span></div>
-            <div><span class="k">7</span><b>Question format</b><span class="e">open, MCQ…</span></div>
-            <div><span class="k">8</span><b>Canonical harness</b><span class="e">with step and time limits</span></div>
-            <div><span class="k">9</span><b>Grading</b><span class="e">rubric, verifier, judge</span></div>
-            <div><span class="k">10</span><b>Judge</b><span class="e">named on 18 cards</span></div>
-            <div><span class="k">11</span><b>Released</b><span class="e">date</span></div>
-            <div style="background:var(--them-soft);border-color:transparent"><span class="k">Global rule</span><b>Max effort, pass@1</b><span class="e">never best-of</span></div>
-          </div>
-          <p class="src">Runs per card: k = 3 on 18, k = 4 on 9. Most-used judge: Gemini 3.5 Flash.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>This is the template behind every page. Same 11 fields, every time, even for benchmarks they didn't build.</p>
-          <p>The global rule matters most. Every model runs at maximum effort and gets averaged into pass@1. That makes any two of their boards comparable.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 05 -->
-    <section class="beat" id="b5">
-      <div class="beat-h"><span class="beat-n">05</span><span class="beat-time">1 min</span><span class="ev">V</span></div>
-      <h2>Level 2: extended pages always show two scores</h2>
-      <div class="beat-body">
-        <div class="panel chart">
-          <div class="cap">Terminal-Bench 2.1, pass@1, read 2026-11-12</div>
-          <svg viewBox="0 0 520 210" role="img" aria-label="Public vs held-out scores for three models: Opus 5.5 83.5 to 47.5, GPT-6.1 Sol 85.4 to 45.8, Grok 4.6 84.6 to 45.5">
+<header class="bar"><div class="bar-in"><div class="brand">How Mercor publishes <span class="tag-int">Public edition</span></div><div class="spacer"></div><span class="kbd">J / K to move</span><button class="btn" id="prevBtn" type="button">Previous</button><button class="btn" id="nextBtn" type="button">Next</button><a class="btn" style="text-decoration:none" href="briefing.html">Broad version</a><a class="btn" style="text-decoration:none" href="publishing-cheatsheet.html">Cheatsheet</a><button class="btn" id="notesBtn" type="button" aria-pressed="false">Hide talk track</button></div></header>
+<div class="shell" id="shell"><nav class="rail" aria-label="Parts"><div class="rail-h">Run sheet</div>
+<a href="#b1"><span class="n">01</span><span>The four stages</span><span class="t">1m</span></a>
+<a href="#b2"><span class="n">02</span><span>Why Mercor publishes at all</span><span class="t">1m</span></a>
+<a href="#b3"><span class="n">03</span><span>Stage 1: where the benchmark sits</span><span class="t">2m</span></a>
+<a href="#b4"><span class="n">04</span><span>Stage 2: the standard information card</span><span class="t">2m</span></a>
+<a href="#b5"><span class="n">05</span><span>Stage 2: the two-score page</span><span class="t">1m</span></a>
+<a href="#b6"><span class="n">06</span><span>Stage 3: the 12 quality checks</span><span class="t">2m</span></a>
+<a href="#b7"><span class="n">07</span><span>Stage 3: the three numbers that earn trust</span><span class="t">1m</span></a>
+<a href="#b8"><span class="n">08</span><span>Stage 4: what every launch includes</span><span class="t">1m</span></a>
+<a href="#b9"><span class="n">09</span><span>Stage 4: the launch timing</span><span class="t">2m</span></a>
+<a href="#b10"><span class="n">10</span><span>Stage 4: after launch</span><span class="t">1m</span></a>
+<a href="#b11"><span class="n">11</span><span>Where the process breaks</span><span class="t">1m</span></a>
+<a href="#appendix"><span class="n">··</span><span>Sources</span><span class="t"></span></a><div class="total"><span>Total</span><span>15 min</span></div></nav><main>
+<section class="cover"><div class="eyebrow">Briefing · publishing process</div><h1>How Mercor takes a benchmark <em>from idea to launch</em>.</h1><p class="lede">This walkthrough follows one Mercor benchmark from idea to live web page and beyond. Mercor never wrote its process down, so it's pieced together here from its website, its research papers and the dates its files went online.</p><div class="cover-meta"><span>Facts as of <b>12 November 2026</b></span><span>Run time <b>15 min</b></span></div><div class="legend-pair"><span><i class="sw" style="background:var(--them)"></i>Mercor</span></div></section>
+<section class="beat" id="b1"><div class="beat-h"><span class="beat-n">Part 1</span><span class="beat-time">1 min</span></div><h2>Every benchmark goes through four stages</h2><p class="show">Mercor never wrote this down. We pieced it together from its website, papers and file dates.</p><div class="beat-body"><div class="panel"><div class="pipe"><div class="stage"><span class="lv">Stage 1</span><b>Catalog</b><span>Decide which group it goes in</span></div><div class="stage"><span class="lv">Stage 2</span><b>Page</b><span>Fill in a standard page</span></div><div class="stage hl"><span class="lv">Stage 3</span><b>Quality checks</b><span>Pass 12 checks</span></div><div class="stage"><span class="lv">Stage 4</span><b>Launch</b><span>Release it, then keep it updated</span></div></div><div class="rem"><span class="v">4 stages</span><span>Catalog, page, quality checks, launch.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Every Mercor benchmark goes through the same four stages, in the same order. First, decide where it sits in the catalog. Second, fill in a standard page. Third, pass a set of quality checks. Fourth, launch it and keep it updated.</p><p>Stage three matters most, because it's the reason AI labs trust Mercor's scores.</p></aside></div></section>
+<section class="beat" id="b2"><div class="beat-h"><span class="beat-n">Part 2</span><span class="beat-time">1 min</span></div><h2>Publishing is Mercor's marketing</h2><p class="show">The free test earns attention. The data behind it earns the money.</p><div class="beat-body"><div class="panel"><div class="big2"><div><span class="v">240</span><span class="l">tasks free to download, for testing only</span></div><div><span class="v">2,620</span><span class="l">tasks sold to AI labs for training</span></div></div><div class="rem"><span class="v">240 vs 2,620</span><span>Free tasks versus tasks for sale, for Mercor's flagship benchmark.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Publishing is Mercor's marketing. A free benchmark gets attention and gets cited in research. The money comes from selling the much larger set of tasks behind it to AI labs for training.</p><p>So Mercor shows enough to be trusted and keeps most of the data back.</p></aside></div></section>
+<section class="beat" id="b3"><div class="beat-h"><span class="beat-n">Part 3</span><span class="beat-time">2 min</span></div><h2>Who built a benchmark decides how much its page shows</h2><p class="show">Mercor's 43 benchmarks, in four groups.</p><div class="beat-body"><div class="panel"><div class="tiers4"><div class="d1"><span class="n">6</span>Built with a partner</div><div class="d2"><span class="n">2</span>Mercor's own</div><div class="d3"><span class="n">10</span>Public tests Mercor added private tasks to</div><div class="d4"><span class="n">25</span>Other people's tests Mercor just runs</div></div><div class="two"><div><h3>Mercor's own pages show</h3><ul><li>Error ranges on scores</li><li>Who wrote the tasks</li><li>How it was built</li><li>Release date and an FAQ</li></ul></div><div><h3>Other people's pages show</h3><ul><li>The scoreboard</li><li>A sample task</li><li>A "Get in touch" button</li></ul></div></div><div class="rem"><span class="v">43</span><span>Benchmarks, sorted into 4 groups by who built them.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Mercor sorts its 43 benchmarks into four groups by who built them: its own, built with a partner, public benchmarks it added private tasks to, and other people's benchmarks it just runs.</p><p>The group decides how much the page shows. Mercor's own benchmarks get the most: error ranges on the scores, who wrote the tasks, how it was built, a release date and an FAQ. Other people's get the minimum. One gap: the group hints at who built a benchmark but never says it outright.</p></aside></div></section>
+<section class="beat" id="b4"><div class="beat-h"><span class="beat-n">Part 4</span><span class="beat-time">2 min</span></div><h2>Every benchmark gets the same 11-item information card</h2><p class="show">The same 11 facts for all 31 benchmarks on Mercor's methodology page.</p><div class="beat-body"><div class="panel"><div class="info"><span>Who made it</span><span>Number of tasks</span><span>Runs per task</span><span>How it's scored</span><span>Type of input</span><span>Task type</span><span>Question type</span><span>Test setup</span><span>How answers are marked</span><span>Which AI marks them</span><span>Release date</span></div><p class="rule"><b>One rule for every test:</b> each model runs at its strongest setting, and each task is run several times and averaged. So any two scoreboards compare fairly.</p><div class="rem"><span class="v">11 items</span><span>On every benchmark's information card, with no gaps across all 31 cards.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Every benchmark, even ones Mercor didn't build, gets the same 11-item information card. It covers who made it, how many tasks it has, how many times each task is run, how it's scored, what kind of input it uses, the task and question type, the test setup, how answers are graded, which AI does the grading, and the release date.</p><p>One rule covers them all: every model is tested at its strongest setting, and each task is run several times and averaged. Because the rule never changes, any two Mercor scoreboards can be compared fairly.</p></aside></div></section>
+<section class="beat" id="b5"><div class="beat-h"><span class="beat-n">Part 5</span><span class="beat-time">1 min</span></div><h2>Extended benchmarks always show two scores</h2><p class="show">Each row is one AI model. The hollow dot is its score on the public test. The filled dot is its score on Mercor's fresh tasks.</p><div class="beat-body"><div class="panel"><svg viewBox="0 0 520 210" role="img" aria-label="Public vs held-out scores for three models: Opus 5.5 83.5 to 47.5, GPT-6.1 Sol 85.4 to 45.8, Grok 4.6 84.6 to 45.5">
             <g stroke="var(--line)" stroke-width="1"><line x1="110.0" y1="34" x2="110.0" y2="180"/><line x1="207.5" y1="34" x2="207.5" y2="180"/><line x1="305.0" y1="34" x2="305.0" y2="180"/><line x1="402.5" y1="34" x2="402.5" y2="180"/><line x1="500.0" y1="34" x2="500.0" y2="180"/></g>
             <text x="110.0" y="200" text-anchor="middle">0%</text><text x="207.5" y="200" text-anchor="middle">25%</text><text x="305.0" y="200" text-anchor="middle">50%</text><text x="402.5" y="200" text-anchor="middle">75%</text><text x="500.0" y="200" text-anchor="middle">100%</text>
-            <g><circle cx="116" cy="14" r="5" fill="var(--them)"/><text x="126" y="18">Held-out (Mercor tasks)</text>
-              <circle cx="320" cy="14" r="5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><text x="330" y="18">Public original</text></g>
+            <g><circle cx="116" cy="14" r="5" fill="var(--them)"/><text x="126" y="18">Mercor's fresh tasks</text>
+              <circle cx="320" cy="14" r="5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><text x="330" y="18">Public test</text></g>
             <g>
               <text class="lab" x="0" y="67">Opus 5.5</text>
               <line x1="295.25" y1="62" x2="435.65" y2="62" stroke="var(--them)" stroke-width="3" opacity=".35"/>
@@ -475,229 +334,14 @@ footer{font-size:12px; color:var(--muted); border-top:1px solid var(--line); pad
               <circle cx="287.45" cy="152" r="7" fill="var(--them)"/><circle cx="439.94" cy="152" r="7" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
               <text class="vt" x="275.45" y="157" text-anchor="end">45.5</text><text class="vo" x="451.94" y="157">84.6</text>
             </g>
-          </svg>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>When they extend someone else's benchmark, the page format is fixed: the public score next to the held-out score.</p>
-          <p>Every model loses about half. That one chart makes the case for fresh data without any copy.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 06 -->
-    <section class="beat" id="b6">
-      <div class="beat-h"><span class="beat-n">06</span><span class="beat-time">2 min</span><span class="ev">V</span><span class="ev">R</span></div>
-      <h2>Level 3: 12 gates before anything ships</h2>
-      <p class="claim">Reconstructed from 6 papers, which show the same gates each time. Grouped here into four phases.</p>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="phases">
-            <div class="phase"><span class="ph">Design</span>
-              <div class="gate"><span class="gn"><span>1</span><span>R</span></span><b>Scope</b><span class="gs">227 experts surveyed, 18 categories</span></div>
-              <div class="gate"><span class="gn"><span>2</span><span>R</span></span><b>Expert vetting</b><span class="gs">30–45 min interview + 1–2 h paid test</span></div>
-            </div>
-            <div class="phase"><span class="ph">Build</span>
-              <div class="gate"><span class="gn"><span>3</span><span>V</span></span><b>Authoring</b><span class="gs">Gold output per task; 22 of 33 worlds fictional</span></div>
-              <div class="gate"><span class="gn"><span>4</span><span>V</span></span><b>Review</b><span class="gs">~5% of approved tasks re-reviewed</span></div>
-              <div class="gate"><span class="gn"><span>5</span><span>V</span></span><b>Difficulty filter</b><span class="gs">599 candidates, hardest kept</span></div>
-            </div>
-            <div class="phase"><span class="ph">Verify</span>
-              <div class="gate"><span class="gn"><span>6</span><span>V</span></span><b>Independent re-solve</b><span class="gs">20% solved fresh, 10% fixed</span></div>
-              <div class="gate"><span class="gn"><span>7</span><span>V</span></span><b>Judge validation</b><span class="gs">98.5% on 747 labels</span></div>
-              <div class="gate"><span class="gn"><span>8</span><span>R</span></span><b>Statistics</b><span class="gs">k = 3–8, CIs, significance</span></div>
-            </div>
-            <div class="phase"><span class="ph">Release prep</span>
-              <div class="gate"><span class="gn"><span>9</span><span>R</span></span><b>Held-out split</b><span class="gs">e.g. 400 private / 100 open</span></div>
-              <div class="gate"><span class="gn"><span>10</span><span>V</span></span><b>License and legal</b><span class="gs">CC-BY, eval-only, click-through</span></div>
-              <div class="gate"><span class="gn"><span>11</span><span>V</span></span><b>Spec card</b><span class="gs">11 fields, 31 of 31</span></div>
-              <div class="gate"><span class="gn"><span>12</span><span>R</span></span><b>Reproducibility</b><span class="gs">Harness open-sourced</span></div>
-            </div>
-          </div>
-          <p class="src">Experts per benchmark: 42 to 256. Agents authors average 12.9 years' experience; Accounting median 11, 52% ex-Big Four.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>Design, build, verify, then prepare the release. Nothing unusual in the steps. What's unusual is that they publish a number for most of them.</p>
-          <p>Gates 10 and 12 have no number. They're the release mechanics: the license and the open harness.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 07 -->
-    <section class="beat" id="b7">
-      <div class="beat-h"><span class="beat-n">07</span><span class="beat-time">1 min</span><span class="ev">V</span></div>
-      <h2>Level 3: three numbers make labs trust the score</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="proof">
-            <div><span class="v">20%</span><b>Independent re-solve</b><span>Experts who never saw a task solve it from scratch. On APEX-Agents (96 tasks), 10% needed a fix, applied across the set.</span></div>
-            <div><span class="v">98.5%</span><b>Judge agreement</b><span>AI judge vs expert labels: 98.5% on 747 (Agents). 97.1% on 1,687, κ 0.857, 10 judges compared (Accounting).</span></div>
-            <div><span class="v">599</span><b>Difficulty filter</b><span>Accounting candidates attacked by frontier models; only the hardest kept. Threshold not published.</span></div>
-          </div>
-          <div class="cap">The result: top score at launch vs a 20–30% headroom band</div>
-          <div class="strip">
-            <svg viewBox="0 0 640 74" role="img" aria-label="Launch top scores: Agents 24%, SWE 25%, PLE 48%, Accounting 56%, against a 20 to 30 percent target band">
-              <rect x="146.0" y="14" width="58.0" height="34" fill="var(--us-soft)"/>
-              <line x1="30" y1="31" x2="610" y2="31" stroke="var(--line)" stroke-width="2"/>
-              <circle cx="169.2" cy="31" r="6" fill="var(--them)"/><circle cx="175.0" cy="31" r="6" fill="var(--them)" opacity=".7"/>
-              <circle cx="308.4" cy="31" r="6" fill="var(--them)"/><circle cx="354.8" cy="31" r="6" fill="var(--them)"/>
-              <text x="163.2" y="10" text-anchor="end">Agents 24</text><text x="181.0" y="10">SWE 25</text>
-              <text x="308.4" y="10" text-anchor="middle">PLE 48</text><text x="354.8" y="62" text-anchor="middle">Accounting 56</text>
-              <text x="175.0" y="62" text-anchor="middle" style="fill:var(--us)">20–30% target</text>
-              <text x="30" y="62">0%</text><text x="610" y="62" text-anchor="end">100%</text>
-            </svg>
-          </div>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>If a lab asks "Is this benchmark fair?", these three numbers answer it. The tasks are solvable, the grader is accurate, and the tasks are hard.</p>
-          <p>Two of their four launches landed inside a 20–30% band, hard enough to matter but not hopeless.</p>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 08 -->
-    <section class="beat" id="b8">
-      <div class="beat-h"><span class="beat-n">08</span><span class="beat-time">1 min</span><span class="ev">R</span></div>
-      <h2>Level 4: what ships in the launch package</h2>
-      <p class="claim">From 5 Mercor-built launches checked.</p>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="pkg">
-            <div class="al"><span class="f">Always · 5 of 5</span><b>arXiv paper</b></div>
-            <div class="al"><span class="f">Always · 5 of 5</span><b>Blog, named authors</b></div>
-            <div class="al"><span class="f">Always · 5 of 5</span><b>Leaderboard</b></div>
-            <div class="al"><span class="f">Always · 5 of 5</span><b>Hidden test set</b></div>
-            <div class="us2"><span class="f">Usually · 4 of 5</span><b>Open split on Hugging Face</b></div>
-            <div class="us2"><span class="f">Usually · 4 of 5</span><b>Open harness on GitHub</b></div>
-            <div class="so"><span class="f">Sometimes</span><b>Partner post, press</b></div>
-            <div class="nv"><span class="f">Never</span><b>Changelog, DOI, release tags</b></div>
-          </div>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>Four things always ship: the paper, the blog, the board and a hidden test set. The open data and the harness usually do.</p>
-          <p>What never ships is anything for versioning.</p>
-        </aside>
-      </div>
-    </section>
-
-    <!-- 09 -->
-    <section class="beat" id="b9">
-      <div class="beat-h"><span class="beat-n">09</span><span class="beat-time">2 min</span><span class="ev">R</span></div>
-      <h2>Level 4: paper a day early, then everything at once</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="tl">
-            <div><span class="when">T−7</span><b>Private repos</b><span class="eg">APEX-Agents HF repo: 01-14</span></div>
-            <div><span class="when">T−1</span><b>arXiv paper</b><span class="eg">2026-01-20</span></div>
-            <div class="t0"><span class="when">T0</span><b>Blog, board, open data</b><span class="eg">2026-01-21, same day</span></div>
-            <div><span class="when">T+1</span><b>Press</b><span class="eg">TechCrunch, 01-22</span></div>
-            <div><span class="when">Weeks after</span><b>arXiv revisions</b><span class="eg">APEX-v1 reached v6</span></div>
-          </div>
-          <div class="tw">
-            <table class="launches">
-              <thead><tr><th>Launch</th><th>arXiv</th><th>Blog</th><th>Open data</th></tr></thead>
-              <tbody>
-                <tr><td>APEX-v1</td><td>2025-09-30</td><td>2025-10-01</td><td class="late">2025-12-10 (+71 days)</td></tr>
-                <tr><td>APEX-Agents</td><td>2026-01-20</td><td>2026-01-21</td><td>Day 0</td></tr>
-                <tr><td>APEX-SWE</td><td>2026-01-13</td><td class="late">2026-03-24 (paper 10 weeks early)</td><td>50-task dev set</td></tr>
-                <tr><td>APEX-Accounting (Ramp)</td><td>2026-07-29</td><td>2026-07-31</td><td class="late">2026-09-14 (+45 days)</td></tr>
-                <tr><td>APEX-Agents v1.1</td><td>none</td><td>2026-09-08</td><td>New HF repo 08-15</td></tr>
-                <tr><td>PLE (Google)</td><td>2026-10-21</td><td>2026-11-03</td><td>29 public tasks</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="src">Partner-built benchmarks (Harvey, Cognition, Sierra) launch on the partner's channels. Mercor adds a hosted board weeks or months later. Only PLE with Google was a same-day co-launch.</p>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>The recipe is simple. Repos are set up privately a week ahead. The paper goes up the day before so there's something to cite. Then blog, board and data go live together, and press follows.</p>
-          <p>They don't always hold to it. Open data came 45 and 71 days late on two launches.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 10 -->
-    <section class="beat" id="b10">
-      <div class="beat-h"><span class="beat-n">10</span><span class="beat-time">1 min</span><span class="ev">V</span><span class="ev">R</span></div>
-      <h2>Level 4: after launch, fast reruns and loose versioning</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="cols3">
-            <div class="mini"><span class="who">New version</span><h3>A new Hugging Face repo</h3><p>APEX-Agents v1.1 got its own repo. The blog post served as the changelog. The old repo doesn't point to the new one.</p></div>
-            <div class="mini"><span class="who">Leaderboard</span><h3>Same URL, scores replaced</h3><p>v1.1 removed scores for models caught "scattergunning". No record of what changed on the board itself.</p></div>
-            <div class="mini"><span class="who">Reruns</span><h3>New models within days</h3><p>On 2026-11-12 their boards showed Fable 5.2, GPT-6.1 Sol and Gemini 4 Carbon.</p></div>
-          </div>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>After launch, they're fast at reruns and sloppy at versioning. Old versions just sit there with no pointer forward.</p>
-          
-        </aside>
-      </div>
-    </section>
-
-    <!-- 11 -->
-    <section class="beat" id="b11">
-      <div class="beat-h"><span class="beat-n">11</span><span class="beat-time">1 min</span><span class="ev">V</span></div>
-      <h2>Where their process breaks</h2>
-      <div class="beat-body">
-        <div class="panel">
-          <div class="pairs">
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>Dates disagree.</b> APEX-Accounting "released March 2026" on the methodology page; paper and blog are July.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>Task counts disagree.</b> 100 on the board, 160 in the paper.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>No pointer from old to new.</b> No changelog files.</span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>Origin implied by the tier.</b></span></div>
-            <div class="pair" style="grid-template-columns:minmax(0,1fr)"><span class="w"><b>Open data weeks late.</b></span></div>
-          </div>
-        </div>
-        <aside class="say">
-          <div class="say-h">Talk track</div>
-          <p>Speed costs them consistency. Their own pages disagree on dates and task counts for the same benchmark.</p>
-          <p>Each of these is cheap to avoid with one source of truth for dates, counts and versions.</p>
-        </aside>
-      </div>
-    </section>
-
-    
-
-    
-
-    <!-- appendix -->
-    <section class="beat" id="appendix">
-      <div class="beat-h"><span class="beat-n">Appendix</span></div>
-      <h2>What we can't see, and where this comes from</h2>
-      <div class="appendix">
-        <div class="panel">
-          <div class="cap">Can't see from outside → who could tell us</div>
-          <ul>
-            <li>Who signs off a release, and any partner veto → former Mercor research staff; the closed APEX PM role</li>
-            <li>Reviewers per task, reviewer scoring, offboarding → former Mercor contractors</li>
-            <li>Partner contracts and co-publication rights → staff at Ramp, Harvey, Cognition, Google</li>
-            <li>Difficulty threshold and discard rates → not published</li>
-            <li>Extra QC on licensed data → lab data buyers</li>
-          </ul>
-        </div>
-        <div class="panel">
-          <div class="cap">Sources and method</div>
-          <ul>
-            <li>43 benchmark pages and 31 methodology cards on mercor.com/apex, read 2026-11-12</li>
-            <li>6 arXiv papers. APEX-Agents and APEX-Accounting re-read directly</li>
-            <li>Hugging Face and GitHub repo dates, Wayback captures, partner and press posts</li>
-                      </ul>
-          <p class="src"><span class="ev">V</span> verified on the primary source · <span class="ev">R</span> research agent, source cited, not re-read · <span class="ev">I</span> inferred</p>
-        </div>
-      </div>
-      <footer>Compiled from public sources: Mercor's site, arXiv, Hugging Face and GitHub, as of 2026-11-12. Boards change weekly. <a href="index.html">Full Mercor teardown</a></footer>
-    </section>
-  </main>
-</div>
-
+          </svg><div class="rem"><span class="v">84% → 46%</span><span>Top models' scores on public tasks versus Mercor's fresh ones.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>When Mercor extends someone else's public benchmark with its own private tasks, the page always shows two scores per model: one on the public tasks and one on Mercor's fresh ones.</p><p>Top models score about 84% on the public version and about 46% on the fresh tasks. That single chart makes the case for buying fresh data, with no sales copy needed.</p></aside></div></section>
+<section class="beat" id="b6"><div class="beat-h"><span class="beat-n">Part 6</span><span class="beat-time">2 min</span></div><h2>12 quality checks, in four phases</h2><p class="show">What happens to every benchmark before it goes public.</p><div class="beat-body"><div class="panel"><div class="phases4"><div><h3>Design</h3><ul><li>Decide what to test</li><li>Screen the experts: interview and paid trial</li></ul></div><div><h3>Build</h3><ul><li>Experts write tasks with model answers</li><li>Other experts review them</li><li>Throw out tasks that are too easy</li></ul></div><div><h3>Verify</h3><ul><li>Other experts re-solve a sample</li><li>Test the AI grader against humans</li><li>Run proper statistics</li></ul></div><div><h3>Release</h3><ul><li>Keep most tasks private</li><li>Set the license</li><li>Fill in the information card</li><li>Publish the test code</li></ul></div></div><div class="rem"><span class="v">12 checks</span><span>In four phases: design, build, verify, release.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Mercor's research papers describe the same 12 checks each time, in four phases.</p><p><b>Design:</b> decide what to test, and screen the experts who'll write the tasks with an interview and a paid trial.</p><p><b>Build:</b> experts write each task with a model answer, other experts review it, and tasks that AI models find too easy are thrown out.</p><p><b>Verify:</b> other experts re-solve a sample from scratch, the AI grader is tested against human graders, and the results get proper statistics.</p><p><b>Release:</b> keep most tasks private, set the license, fill in the information card, and publish the test code so others can repeat the results.</p></aside></div></section>
+<section class="beat" id="b7"><div class="beat-h"><span class="beat-n">Part 7</span><span class="beat-time">1 min</span></div><h2>Three numbers answer "is this test fair?"</h2><p class="show">Each number proves one thing an AI lab cares about.</p><div class="beat-body"><div class="panel"><div class="big2"><div><span class="v">20%</span><span class="l">of tasks solved again from scratch by other experts. Shows the tasks can be solved.</span></div><div><span class="v">98.5%</span><span class="l">agreement between the AI grader and human experts. Shows the marking is accurate.</span></div><div><span class="v">599</span><span class="l">candidate tasks, cut down to only the hardest. Shows the test is hard.</span></div></div><div class="rem"><span class="v">20% · 98.5% · 599</span><span>Solvable, accurately marked, and hard.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>When a lab asks "Is this benchmark fair?", three numbers answer it. <b>20%</b> of tasks were solved again from scratch by other experts, which shows the tasks can be solved. The AI grader agrees with human experts <b>98.5%</b> of the time, which shows the marking is accurate. One benchmark started with <b>599</b> candidate tasks and kept only the hardest, which shows it's hard.</p><p>Two of Mercor's four launches ended with a best score around 25%: hard enough to be useful, not so hard it's hopeless.</p></aside></div></section>
+<section class="beat" id="b8"><div class="beat-h"><span class="beat-n">Part 8</span><span class="beat-time">1 min</span></div><h2>What ships with every launch</h2><p class="show">From five Mercor launches we checked.</p><div class="beat-body"><div class="panel"><div class="two"><div><h3>Every time</h3><ul><li>Research paper</li><li>Blog post with named authors</li><li>Scoreboard</li><li>Private test tasks</li></ul></div><div><h3>Most times</h3><ul><li>Free sample of tasks</li><li>Code to run the test</li></ul><h3>Never</h3><ul><li>A list of what changed between versions</li></ul></div></div><div class="rem"><span class="v">4 of 4</span><span>Paper, blog, scoreboard and private tasks ship every time.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Every Mercor launch includes four things: a research paper, a blog post with named authors, a scoreboard, and a private set of test tasks. Most launches also include a small free sample of tasks and the code to run them.</p><p>None of them include anything to track versions, such as a list of what changed.</p></aside></div></section>
+<section class="beat" id="b9"><div class="beat-h"><span class="beat-n">Part 9</span><span class="beat-time">2 min</span></div><h2>The paper goes up a day early, then everything else at once</h2><p class="show">The order Mercor releases things in.</p><div class="beat-body"><div class="panel"><div class="tl"><div><span class="when">A week before</span><b>Files set up privately</b></div><div><span class="when">Day before</span><b>Research paper online</b></div><div class="t0"><span class="when">Launch day</span><b>Blog, scoreboard and free data</b></div><div><span class="when">Day after</span><b>News coverage</b></div><div><span class="when">Weeks after</span><b>Paper corrected</b></div></div><p class="src">Twice, the free data came 45 and 71 days late.</p><div class="rem"><span class="v">1 day early</span><span>The research paper goes up the day before everything else.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Files are set up privately about a week before launch. Mercor launches every new benchmark the same way. The research paper goes online a day early, so there's something to cite. The next day the blog post, the scoreboard and the free data all go live together. News coverage follows a day later.</p><p>Mercor doesn't always hold to this. On two launches the free data came 45 and 71 days late. Benchmarks built by partners launch on the partner's own website first, and Mercor adds a scoreboard later. Only one, with Google, launched on both companies' sites on the same day.</p></aside></div></section>
+<section class="beat" id="b10"><div class="beat-h"><span class="beat-n">Part 10</span><span class="beat-time">1 min</span></div><h2>After launch: fast, but untidy</h2><div class="beat-body"><div class="panel"><div class="two"><div><h3 class="them">Fast</h3><ul><li>New AI models on its scoreboards within days</li></ul></div><div><h3 class="them">Untidy</h3><ul><li>A new version gets a new download page</li><li>The old page doesn't link to it</li><li>Scores are replaced with no record of changes</li></ul></div></div><div class="rem"><span class="v">Days</span><span>How long Mercor takes to add a new model to its scoreboards.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>After launch Mercor is fast but untidy. Fast: new AI models appear on its scoreboards within days of coming out.</p><p>Untidy: a new version gets a brand-new download page, the old page isn't updated to point to it, and scores on the board are swapped out with no record of what changed.</p></aside></div></section>
+<section class="beat" id="b11"><div class="beat-h"><span class="beat-n">Part 11</span><span class="beat-time">1 min</span></div><h2>Where the process breaks</h2><p class="show">The same fact, stated differently in two places.</p><div class="beat-body"><div class="panel"><div class="contra"><div><b>Release date</b><span>Methodology page: <span class="x">March 2026</span></span><span>Paper and blog: <span class="x">July 2026</span></span></div><div><b>Number of tasks</b><span>Scoreboard page: <span class="x">100</span></span><span>Research paper: <span class="x">160</span></span></div><div><b>Expert network</b><span>Data page: <span class="x">5 million+</span></span><span>Partner page: <span class="x">4 million+</span></span></div><div><b>Versions</b><span>New version: <span class="x">new download page</span></span><span>Old page: <span class="x">no link to the new one</span></span></div></div><div class="rem"><span class="v">100 vs 160</span><span>Two different task counts Mercor gives for the same benchmark.</span></div></div><aside class="say"><div class="say-h">What to say</div><p>Speed costs Mercor consistency. Its own pages disagree on basic facts: one says a benchmark came out in March, the paper says July. One says 100 tasks, the paper says 160. Old versions don't point to new ones, the free data is sometimes weeks late, and who built a benchmark is implied rather than stated.</p><p>Each of these would be easy to avoid with one trusted source for dates, task counts and versions.</p></aside></div></section>
+<section class="beat" id="appendix"><div class="beat-h"><span class="beat-n">Sources</span></div><h2>Where this comes from</h2><div class="appendix"><div class="panel"><div class="cap">Sources</div><ul><li>Mercor's website: 43 benchmark pages, the methodology page and its data pages, read 12 November 2026</li><li>Six Mercor research papers on arXiv, two of them checked line by line</li><li>Dates from Hugging Face, GitHub and news coverage</li></ul></div><div class="panel"><div class="cap">What we can't see from outside</div><ul><li>Who signs off a launch</li><li>How many reviewers each task gets</li><li>How many tasks are thrown out</li><li>What Mercor charges</li></ul></div></div><footer>Compiled from public sources. <a href="index.html">Full Mercor teardown</a> Mercor's scoreboards change weekly.</footer></section></main></div>
 <script>
 (function(){
   var shell = document.getElementById('shell');
